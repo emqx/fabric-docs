@@ -1,0 +1,85 @@
+{
+  "cn": [
+    {
+      "title": "产品介绍",
+      "children": [
+        {
+          "title": "fabric是什么",
+          "path": "./"
+        },
+        {
+          "title": "产品功能",
+          "path": "introduction/checklist"
+        },
+        {
+          "title": "应用场景",
+          "path": "introduction/checklist"
+        },
+        {
+          "title": "使用限制",
+          "path": "introduction/checklist"
+        }
+      ]
+    },
+    {
+      "title": "设备接入",
+      "children": [
+        {
+          "title": "创建产品",
+          "path": "./"
+        },
+        {
+          "title": "创建设备",
+          "path": "introduction/checklist"
+        },
+        {
+          "title": "物模型创建",
+          "path": "introduction/checklist"
+        },
+        {
+          "title": "设备SDK使用",
+          "path": "introduction/checklist"
+        }
+      ]
+    },
+    {
+      "title": "平台端开发",
+      "children": [
+        {
+          "title": "规则引擎使用",
+          "path": "./"
+        },
+        {
+          "title": "数据落地",
+          "path": "introduction/checklist"
+        },
+        {
+          "title": "api使用",
+          "path": "introduction/checklist"
+        }
+      ]
+    },
+    {
+      "title": "云边协同",
+      "children": [
+        {
+          "title": "云边协同介绍",
+          "path": "./"
+        },
+        {
+          "title": "如何接入",
+          "path": "introduction/checklist"
+        }
+      ]
+    },
+    {
+      "title": "监控运维",
+      "children": [
+        {
+          "title": "任务",
+          "path": "./"
+        }
+      ]
+    },
+  ]
+}
