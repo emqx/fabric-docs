@@ -22,11 +22,32 @@
       ]
     },
     {
+      "title": "快速入门",
+      "children": [
+        {
+          "title": "创建产品",
+          "path": "quick/create_product.md"
+        },
+        {
+          "title": "创建设备",
+          "path": "quick/create_device.md"
+        }
+      ]
+    },
+    {
       "title": "设备接入",
       "children": [
         {
           "title": "创建产品",
           "path": "./"
+        },
+        {
+          "title": "产品管理",
+          "path": "device_access/product_management.md"
+        },
+        {
+          "title": "设备管理",
+          "path": "device_access/device_management.md"
         },
         {
           "title": "创建设备",
