@@ -5,19 +5,19 @@
       "children": [
         {
           "title": "fabric是什么",
-          "path": "./"
+          "path": "zh_CN/introduction/fabric"
+        },
+        {
+          "title": "名词解释",
+          "path": "zh_CN/introduction/noun"
         },
         {
           "title": "产品功能",
-          "path": "introduction/checklist"
+          "path": "zh_CN/introduction/function"
         },
         {
           "title": "应用场景",
-          "path": "introduction/checklist"
-        },
-        {
-          "title": "使用限制",
-          "path": "introduction/checklist"
+          "path": "zh_CN/introduction/app"
         }
       ]
     },
