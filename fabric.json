@@ -12,10 +12,6 @@
           "path": "zh_CN/introduction/noun"
         },
         {
-          "title": "产品功能",
-          "path": "zh_CN/introduction/function"
-        },
-        {
           "title": "应用场景",
           "path": "zh_CN/introduction/app"
         }
@@ -99,6 +95,15 @@
         {
           "title": "任务",
           "path": "./"
+        }
+      ]
+    },
+    {
+      "title": "版本发布",
+      "children": [
+        {
+          "title": "0.6.0",
+          "path": "./zh_CN/release/0.6.0"
         }
       ]
     },
