@@ -1,298 +1,178 @@
+物模型为产品定义了三种基本抽象，属性，服务，事件，以便于边缘的产品与云端进行数据交互和管理。
+
 ## 使用说明
-注意：设备与平台的通信格式中各能力需要携带自定模块与标识符，格式为：`模块标识符:能力标识符`，中间为英文冒号。  
-例如，在物模型 TSL 中，自定义模块标识符为：`test_model_id`，能力标识符为：`test_ability_id`，  
-则通信数据中的格式为：`test_model_id:test_ability_id`
+* 每个产品可以添加任意多个自定义模块
+* 编辑物模型后，需要发布才能生效
+* 可以通过恢复某个历史版本继续编辑
+* 可以将其他同类型产品的最后一次发布的物模型拷贝至当前产品，拷贝时将清空当前产品未发布的物模型
 
-## 设备属性上报
+## 创建产品
 
-* 设备端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/post`
-* 请求数据格式：
+登陆EMQ X Fabric 物联网平台，常见产品具体参见[创建产品](./create_product.md)
 
-```json
-{
-  "id": "123456",
-  "version": "1.0",
-  "sys":{
-      "ack":0
-  },
-  "params": {
-    "model_id:Switch": {
-      "value": "on",
-      "time": 1634841971000
-    },
-    "model_id:Temperature": {
-      "value": 35.6,
-      "time": 1634841971000
-    }
-  },
-  "method": "thing.property.post"
-}
-```  
+## 创建设备
 
-* 参数说明
+创建设备具体参见[创建设备](./create_device.md)
 
-| 参数  | 类型  | 说明  |
-| :------------ | :------------ | :------------ |
-| params  | object  | value 可以是普通的值类型，比如: `"Switch:"on"` <br/>也可以是结构体，可以附带其他参数，比如时间戳: <br/> `"Switch": { "value": "on",  "time": 1634841971000}` |
-| sys  | object  | 扩展功能  |
-| ack  | int  | sys扩展功能中的参数，表示是否需要平台返回响应 <br/> - 1: 需要平台返回响应 <br/> - 2: 不需要平台返回响应 |
+## 创建物模型
 
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/post_reply`
-* 响应数据格式：
+下面我们以基于树莓派的温控系统为例，在上面的产品和设备都创建好以后，点击产品列表，查看刚刚创建好的设备。
 
-```json
-{
-  "id": "123456",
-  "code": 0,
-  "data": {}
-}
-```
+![image-20210812114516412](./_assets/image-20210812114516412.png)
 
-* 参数说明
+选择物模型，点击编辑，点击**添加模块**
 
-| 参数  | 类型  | 说明  |
-| :------------ | :------------ | :------------ |
-| id  | string  | 响应 payload 中的 id 与请求 payload 中的 id 一致，用于平台匹配命令请求与响应的关系  |
+![image-20210812172621646](./_assets/image-20210812172621646.png)
 
+![image-20210812115103091](./_assets/image-20210812115103091.png)
 
-## 属性设置
+| 参数  | 说明  |
+| :------------ | :------------ |
+| 模块名称  | 支持英文、数字和下划线，长度限制为4~30个字符 |
+| 模块标识符 | 支持英文、数字和下划线，长度限制为1~30个字符 |
+| 模块描述 | 对模块进行说明或者备注，最多4096个字符 |
 
-* 平台端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/set`
-* 请求数据格式：
+* 可以选择从历史版本下拉菜单选择某个已发布的历史版本，再点击**恢复此版本**，并在此版本的基础上进行编辑  
+_注意：恢复历史版本将完全覆盖当前正在编辑且未发布的所有模块信息_
 
-```json
-{
-  "id": "123456",
-  "version": "1.0",
-  "params": {
-    "model_id:Wifi": "close"
-  },
-  "method": "thing.property.set"
-}
-```
+![image-20210812115707115](./_assets/image-20210812115707115.png)
 
-* 参数说明
+* 添加属性，在自定义能力的对话框中，选择属性类型，填写相关参数，单击确认。
+
+![image-20210812120514538](./_assets/image-20210812120514538.png)
 
 <table>
-  <tr> <td> 参数 </td>  <td> 类型 </td> <td> 说明 </td> </tr>
-   <tr> <td> params </td> <td> object </td> <td> params可以可以用键值对的形式传递参数，比如：<br/> 
-   
-```
- "params": {
-     "Switch": "on", 
-     "Wifi": "close"
- } 
-```
-
-<br/> 当需要额外传递时间戳时，需使用结构体将所有参数包装起来：<br/> 
-
-```
-"params":{
-    "value": {
-        "Switch": "on",
-        "Wifi": "close"
-    },
-    "time": 1634841971000
-}
-```
-
-</td> </tr>
+<tr> <td>参数</td> <td>说明</td> </tr>
+<tr>
+    <td>名称</td>
+    <td>支持英文、数字和下划线，必须以数字或者字符开头及结尾，长度限制为4~30个字符，同一模块下名称不能重复。</td>
+</tr>
+<tr>
+    <td>标识符</td>
+    <td>支持英文、数字和下划线，必须以数字或者字符开头及结尾，长度限制为1~30个字符</td>
+</tr>
+<tr>
+    <td>数据类型</td>
+    <td> 
+        <div style="line-height:30px;">
+            <li>int32: 32位整型，可选定义取值范围和单位符号</li>
+            <li>float: 单精度浮点型，可选定义取值范围和单位符号</li>
+            <li>double: 双精度浮点型，可选定义取值范围和单位符号</li>
+            <li>enum: 枚举型，定义枚举项的参数值和参数描述</li>
+            <li>bool: 布尔型，包含0和1两种参数，可自定义参数描述</li>
+            <li>text: 文本字符串，需定义字符串长度，支持1~10240个字节</li>
+            <li>date: 时间戳，格式为string类型的UTC时间戳，单位毫秒</li>
+            <li>struct: 结构体，可嵌套除结构体和数组以外的基本类型参数</li>
+            <li>array: 数组，需定义数组元素个数和元素类型，不可嵌套数组。元素个数1~50</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>取值范围</td>
+    <td>数据类型为int、float及double时可设置取值范围</td>
+</tr>
+<tr>
+    <td>单位</td>
+    <td>选填，自定义参数单位描述</td>
+</tr>
+<tr>
+    <td>读写类型</td>
+    <td>
+        <div style="line-height:30px;">
+            <li>读写: 该方式的属性支持查询和设备设置</li>
+            <li>只读: 该方式的属性仅支持由设备端上报，应用程序查询</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>描述</td>
+    <td>对该属性进行说明或备注。长度限制为4096个字符</td>
+</tr>
 </table>
 
-* 设备端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/set_reply`
-* 响应数据格式：
+* 添加方法，在自定义能力的对话框中，选择方法类型，填写相关参数，单击确认。
 
-```json
-{
-  "id": "123456",
-  "code": 0,
-  "data": {}
-}
-```
-## 设备事件上报
-
-* 设备端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/event/model_id:identifier/post`
-* 请求数据格式：
-
-```json
-{
-  "id": "123456",
-  "version": "1.0",
-  "sys":{
-      "ack":0
-  },
-  "params": {
-    "value": {
-      "Switch": "on",
-      "Wifi": "open"
-    },
-    "time": 1634841971000
-  },
-  "method": "thing.event.post.model_id:identifier"
-}
-```
-
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/event/model_id:identifier/post_reply`
-* 响应数据格式：
-```json
-{
-  "id": "123456",
-  "code": 0,
-  "data": {}
-}
-```
-
-## 设备方法调用（异步）
-
-* 平台端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/action/model_id:identifier/exec`
-* 请求数据格式：
-
-```json
-{
-  "id": "123456",
-  "version": "1.0",
-  "params": {
-    "Switch": "on",
-    "Wifi": "close"
-  },
-  "method": "thing.action.exec.model_id:identifier"
-}
-```
-
-* 设备端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/action/model_id:identifier/exec_reply`
-* 响应数据格式：
-
-```json
-{
-  "id": "123456",
-  "code": 0,
-  "data": {
-    "Switch": "on",
-    "Wifi": "close"
-  }
-}
-```
-## 设备方法调用（同步）
-
-* 平台端请求的topic: `/fabric/sys/${productKey}/${deviceName}/rrpc/request/${messageId}`
-* 请求数据格式：
-
-```json
-{
-  "id": "123456",
-  "version": "1.0",
-  "params": {
-    "Switch": "on",
-    "Wifi": "close"
-  },
-  "method": "thing.action.exec.[model_id:]identifier"
-}
-```
-
-* 设备端响应的topic: `/fabric/sys/${productKey}/${deviceName}/rrpc/response/${messageId}`
-* 响应数据格式：
-```json
-{
-  "id": "123456",
-  "code": 0,
-  "data": {
-    "Switch": "on",
-    "Wifi": "close"
-  }
-}
-```
-
-## 设备获取期望属性
-
-* 设备端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/get`
-* 请求数据格式：
-
-```json
-{
-    "id" : "123456",
-    "version":"1.0",
-    "params" : [
-        "model_id:Switch",
-        "model_id:Wifi"
-    ],
-    "method":"thing.property.desired.get"
-}
-```
-
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/get_reply`
-* 响应数据格式：
-
-```json
-{
-    "id":"123456",
-    "code":0,
-    "data":{
-        "model_id:Switch": {
-            "value": "on",
-            "version": 1
-        },
-        "model_id:Wifi": {
-            "value": "close",
-            "version": 2
-        }
-    }
-}
-```
-
-## 设备删除期望属性
-
-* 设备端请求的topic: `//fabric/sys/${productKey}/${deviceName}/thing/property/desired/delete`
-* 请求数据格式：
-
-```json
-{
-    "id": "123456",
-    "version": "1.0",
-    "sys":{
-      "ack":0
-  },
-    "params": {
-        "model_id:Switch": {
-            "version": 1
-        },
-        "model_id:Wifi": {}
-    },
-    "method":"thing.property.desired.delete"  
-}
-```
-
-* 参数说明
+![添加方法]()
 
 <table>
-<tr> <td> 参数 </td>  <td> 类型 </td> <td> 说明 </td> </tr>
-<tr> <td> params </td> <td> object </td> <td> 清除属性时，可以指定清除特定的版本号，如：<br/> 
-
-```
-"params": {
-    "model_id:Switch": {
-        "version": 1
-    }
-}
-```
-
-<br/> 也可以不指定版本号，直接清除整个属性，如：<br/>
-
-```
-"params": {
-    "model_id:Wifi": {}
-}
-```
-
-</td> </tr>
+<tr> <td>参数</td> <td>说明</td> </tr>
+<tr>
+    <td>名称</td>
+    <td>支持英文、数字和下划线，必须以数字或者字符开头及结尾，长度限制为4~30个字符，同一模块下名称不能重复。</td>
+</tr>
+<tr>
+    <td>标识符</td>
+    <td>支持英文、数字和下划线，必须以数字或者字符开头及结尾，长度限制为1~30个字符</td>
+</tr>
+<tr>
+    <td>调用方法</td>
+    <td> 
+        <div style="line-height:30px;">
+            <li>异步: 应用程序调用设备异步方法，平台发送执行指令后立即返回，不会等待设备的响应</li>
+            <li>同步: 应用程序调用设备同步方法，平台发送执行指令后需等待响应，如设备没有响应，则返回超时错误</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>输入参数</td>
+    <td>
+         <div style="line-height:30px;">
+            <li>不能使用平台保留字段作为参数标识符：set、get、post、time、value</li>
+            <li>一个服务最多支持定义20个入参</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>输出参数</td>
+    <td>
+         <div style="line-height:30px;">
+            <li>不能使用平台保留字段作为参数标识符：set、get、post、time、value</li>
+            <li>一个服务最多支持定义20个入参</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>描述</td>
+    <td>对该方法进行说明或备注。长度限制为4096个字符</td>
+</tr>
 </table>
 
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/delete_reply`
-* 响应数据格式：
+* 添加事件，在自定义事件的对话框中，选择事件类型，填写相关参数，单击确认。
 
-```json
-{
-    "id": "123456",
-    "code": 0,
-    "data": {}
-}
-```
+![添加事件]()
+
+<table>
+<tr> <td>参数</td> <td>说明</td> </tr>
+<tr>
+    <td>名称</td>
+    <td>支持英文、数字和下划线，必须以数字或者字符开头及结尾，长度限制为4~30个字符，同一模块下名称不能重复。</td>
+</tr>
+<tr>
+    <td>标识符</td>
+    <td>支持英文、数字和下划线，必须以数字或者字符开头及结尾，长度限制为1~30个字符</td>
+</tr>
+<tr>
+    <td>事件类型</td>
+    <td> 
+        <div style="line-height:30px;">
+            <li>信息: 设备运行时的一般性通知</li>
+            <li>告警: 设备运行时的告警类通知</li>
+            <li>故障: 设备运行时的故障类通知</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>输出参数</td>
+    <td>
+         <div style="line-height:30px;">
+            <li>不能使用平台保留字段作为参数标识符：set、get、post、time、value</li>
+            <li>一个服务最多支持定义20个入参</li>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>描述</td>
+    <td>对该方法进行说明或备注。长度限制为4096个字符</td>
+</tr>
+</table>
+
