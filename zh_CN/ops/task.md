@@ -10,3 +10,23 @@ fabric任务，是按照物模型定义的功能，在设备端实现对应的�
 1. 对于产品下的一批设备进行灰度OTA升级
 1. 定时对设备进行下发、修改配置
 
+## 模板
+
+**基于物模型方法调用指令模板**
+```
+{
+  "identifier": "test_model_id:service_type",
+  "params": {
+    "input_type": 2
+  }
+}
+```
+
+**基于物模型属性设置指令模板**
+```
+{
+  "params": {
+    "test_model_id:property_111": 24,
+  }
+}
+```
