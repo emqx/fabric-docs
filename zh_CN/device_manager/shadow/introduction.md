@@ -22,9 +22,11 @@
 操作步骤：
 1. 登录 Fabric 控制后台
 2. 在左侧导航栏选择 **设备管理**
-3. 单击对应设备的 **名称** 按钮即可跳转至设备详情页
-![](https://github.com/emqx/fabric-docs/tree/main/zh_CN/device_manager/thingmodel/device_detail.png)
-4. 点击 **设备影子**，页面显示应用程序或用户最后一次下发的设置指令
-5. 用户可直接编辑输入框，填写影子期望状态，格式请参考 [设备影子JSON格式](https://github.com/emqx/fabric-docs/tree/main/zh_CN/device_manager/ "设备影子JSON格式")
+3. 单击对应设备的 **名称** 按钮即可跳转至设备详情页  
+
+![添加单各设备](./_assets/device_detail.png)
+
+5. 点击 **设备影子**，页面显示应用程序或用户最后一次下发的设置指令
+6. 用户可直接编辑输入框，填写影子期望状态，格式请参考 [设备影子JSON格式](https://github.com/emqx/fabric-docs/tree/main/zh_CN/device_manager/ "设备影子JSON格式")
     - 设备在线时，平台将保存期望状态，设备通过订阅相关 topic 直接获取期望状
     - 设备离线时，平台将缓存期望状态，设备上线后通过发送相关 topic 主动获取期望状态
