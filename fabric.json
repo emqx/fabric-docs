@@ -94,7 +94,7 @@
       "children": [
         {
           "title": "任务",
-          "path": "./"
+          "path": "./zh_CN/ops/task"
         }
       ]
     },
