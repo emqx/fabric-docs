@@ -103,7 +103,7 @@ comp_list:
 
 其中``observer_interval`` 为探测服务的时间间隔，```update_interval```为更新服务时间间隔。更新完配置文件即可启动edge-agent，可以看到边缘端提供的服务已经上线
 
-![image-20210812150105525](/Users/hom/Library/Application Support/typora-user-images/image-20210812150105525.png)
+![image-20210812150105525](./_assets/image-20210812150105525.png)
 
 然后我们点击服务列表中所提供的服务，即可访问对应的服务
 
