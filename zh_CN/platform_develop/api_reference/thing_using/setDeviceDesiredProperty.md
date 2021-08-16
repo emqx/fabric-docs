@@ -108,8 +108,5 @@ curl host:8082/device-thing-service/v0/thingModel/setDeviceDesiredProperty -X PO
 }
 ```
 <div>
-<span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
-  <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
-</span>
-**versions** 为设置成功后期望属性的最新版本号
+<b>versions</b> 为设置成功后期望属性的最新版本号
 </div>

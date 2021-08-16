@@ -87,8 +87,5 @@ curl host:8082/device-thing-service/v0/thingModel/setDeviceDesiredProperty -X PO
 }
 ```
 <div>
-<span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
-  <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
-</span>
-**desired_property_datas** 数组类型，返回指定属性的期望值
+<b>desired_property_datas</b> 数组类型，返回指定属性的期望值
 </div>`
