@@ -34,12 +34,12 @@
         <span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
            <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
         </span>
-        **说明** 指定属性必须是读写模式。如果您指定了一个只读模式的属性，设置将会失败。并且，一次调用中，不能传入重复的属性标识符。
+        <b>说明</b> 指定属性必须是读写模式。如果您指定了一个只读模式的属性，设置将会失败。并且，一次调用中，不能传入重复的属性标识符。
         <li>Value取值为要设置的期望属性值。</li>
         <span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
            <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
         </span>
-        **说明** 若属性值设置为null，则表示清空期望属性值。
+        <b>说明</b> 若属性值设置为null，则表示清空期望属性值。
     </td>
 </tr>
 <tr>
@@ -52,7 +52,7 @@
         <span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
            <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
         </span>
-        **说明** 一次调用中，key的取值（即属性的identifier）不能重复。
+        <b>说明</b> 一次调用中，key的取值（即属性的identifier）不能重复。
         <li>Value取值为当前期望属性值的版本号。首次设置期望属性值时，指定该参数值为0。
             首次设置期望属性值后，期望值版本号为1。以后每次设置期望值后，
             平台自动将期望值版本加1（即第二次设置期望属性值时，指定该参数值为1。
@@ -61,7 +61,7 @@
         <span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
            <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
         </span>
-        **说明** 如果传入的版本号与当前版本不符，平台将拒绝此次请求。若您不确定当前期望值的版本号，可以不传入版本号，但仍需传入有效的JSON，即传入{}。
+        <b>说明</b> 如果传入的版本号与当前版本不符，平台将拒绝此次请求。若您不确定当前期望值的版本号，可以不传入版本号，但仍需传入有效的JSON，即传入{}。
     </td>
 </tr>
 </table>

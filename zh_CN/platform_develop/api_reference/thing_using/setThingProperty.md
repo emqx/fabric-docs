@@ -37,7 +37,7 @@
             <span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
                 <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
             </span>
-            **说明** 如果设置自定义模块testFb（非默认模块）的属性，则格式为： Items={"testFb:Switch":1,"testFb:Color":"blue"}
+            <b>说明</b> 如果设置自定义模块testFb（非默认模块）的属性，则格式为： Items={"testFb:Switch":1,"testFb:Color":"blue"}
         </div>
     </td>
 </tr>
