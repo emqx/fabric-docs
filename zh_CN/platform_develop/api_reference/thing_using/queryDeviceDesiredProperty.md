@@ -88,4 +88,4 @@ curl host:8082/device-thing-service/v0/thingModel/setDeviceDesiredProperty -X PO
 ```
 <div>
 <b>desired_property_datas</b> 数组类型，返回指定属性的期望值
-</div>`
+</div>
