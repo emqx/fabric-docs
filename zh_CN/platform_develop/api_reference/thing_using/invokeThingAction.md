@@ -37,7 +37,7 @@
     <span style="border-radius: 50%; height: 20px; width: 20px; display: inline-block; background: #238ff9; vertical-align: center;">
        <span style="display: block; color: #FFFFFF; height: 20px; line-height: 20px; text-align: center">?</span>
     </span>
-    <b>说明</b> 自定义模块才需要填写该参数（当前仅不支持默认模块）  
+    <b>说明</b> 自定义模块才需要填写该参数（当前不支持默认模块）  
     </td>
 </tr>
 <tr>
