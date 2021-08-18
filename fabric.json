@@ -5,15 +5,15 @@
       "children": [
         {
           "title": "fabric是什么",
-          "path": "zh_CN/introduction/fabric"
+          "path": "introduction/fabric"
         },
         {
           "title": "名词解释",
-          "path": "zh_CN/introduction/noun"
+          "path": "introduction/noun"
         },
         {
           "title": "应用场景",
-          "path": "zh_CN/introduction/app"
+          "path": "introduction/app"
         }
       ]
     },
@@ -94,7 +94,7 @@
       "children": [
         {
           "title": "任务",
-          "path": "./zh_CN/ops/task"
+          "path": "ops/task"
         }
       ]
     },
@@ -103,7 +103,7 @@
       "children": [
         {
           "title": "0.6.0",
-          "path": "./zh_CN/release/0.6.0"
+          "path": "zh_CN/release/0.6.0"
         }
       ]
     },
