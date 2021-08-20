@@ -60,19 +60,93 @@
       ]
     },
     {
+      "title": "设备管理",
+      "children": [
+        {
+          "title": "物模型",
+          "children": [
+            {
+              "title": "物模型介绍",
+              "children": [
+                {
+                  "title": "什么是物模型",
+                  "path": "device_manager/thingmodel/introduction/What'is thing model"
+                },
+                {
+                  "title": "物模型TSL",
+                  "path": "device_manager/thingmodel/introduction/Thing specification language"
+                }
+              ]
+            },
+            {
+              "title": "添加物模型",
+              "path": "device_manager/thingmodel/add_thing_model"
+            },
+            {
+              "title": "物模型通信",
+              "path": "device_manager/thingmodel/communcate_with_thing_model"
+            },
+            {
+              "title": "物模型数据校验",
+              "path": "device_manager/thingmodel/validate_thing_model_data"
+            }
+          ]
+        },
+        {
+          "title": "设备影子",
+          "children": [
+            {
+              "title": "什么是设备影子",
+              "path": "device_manager/shadow/introduction"
+            },
+            {
+              "title": "设备影子数据交互",
+              "path": "device_manager/shadow/data_flow"
+            },
+            {
+              "title": "设备影子数据格式",
+              "path": "device_manager/shadow/json_message"
+            }
+          ]
+        }
+      ]
+    },
+    {
       "title": "平台端开发",
       "children": [
         {
+          "title": "api使用",
+          "children": [
+            {
+              "title": "物模型使用",
+              "children": [
+                {
+                  "title": "规则引擎使用",
+                  "path": "platform_develop/rule_engine"
+                },
+                {
+                  "title": "规则引擎使用",
+                  "path": "platform_develop/rule_engine"
+                },
+                {
+                  "title": "规则引擎使用",
+                  "path": "platform_develop/rule_engine"
+                },
+                {
+                  "title": "规则引擎使用",
+                  "path": "platform_develop/rule_engine"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "title": "规则引擎使用",
-          "path": "./"
+          "path": "platform_develop/rule_engine"
         },
         {
           "title": "数据落地",
-          "path": "introduction/checklist"
-        },
-        {
-          "title": "api使用",
-          "path": "introduction/checklist"
+          "path": "platform_develop/data_persist"
         }
       ]
     },
