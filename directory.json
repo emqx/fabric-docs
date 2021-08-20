@@ -4,7 +4,7 @@
       "title": "产品介绍",
       "children": [
         {
-          "title": "fabric是什么",
+          "title": "Fabric 是什么",
           "path": "introduction/fabric"
         },
         {
@@ -22,11 +22,11 @@
       "children": [
         {
           "title": "创建产品",
-          "path": "quick/create_product.md"
+          "path": "quick/create_product"
         },
         {
           "title": "创建设备",
-          "path": "quick/create_device.md"
+          "path": "quick/create_device"
         }
       ]
     },
@@ -39,11 +39,11 @@
         },
         {
           "title": "产品管理",
-          "path": "device_access/product_management.md"
+          "path": "device_access/product_management"
         },
         {
           "title": "设备管理",
-          "path": "device_access/device_management.md"
+          "path": "device_access/device_management"
         },
         {
           "title": "创建设备",
@@ -54,7 +54,7 @@
           "path": "introduction/checklist"
         },
         {
-          "title": "设备SDK使用",
+          "title": "设备 SDK 使用",
           "path": "introduction/checklist"
         }
       ]
@@ -70,11 +70,11 @@
               "children": [
                 {
                   "title": "什么是物模型",
-                  "path": "device_manager/thingmodel/introduction/What'is thing model"
+                  "path": "device_manager/thingmodel/introduction/what_is_thing_model"
                 },
                 {
                   "title": "物模型TSL",
-                  "path": "device_manager/thingmodel/introduction/Thing specification language"
+                  "path": "device_manager/thingmodel/introduction/thing_specification_language"
                 }
               ]
             },
@@ -177,9 +177,10 @@
       "children": [
         {
           "title": "0.6.0",
-          "path": "zh_CN/release/0.6.0"
+          "path": "release/0.6.0"
         }
       ]
-    },
-  ]
+    }
+  ],
+  "en": []
 }
