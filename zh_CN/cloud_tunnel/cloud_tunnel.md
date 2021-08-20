@@ -13,11 +13,6 @@
 - 边缘端服务的实时响应
 
   
-
-# 云边通道设备端接入服务
-
-
-
 ## 获取edge-agent并编译
 
 [Releases 地址]([Source code(tar.gz)](https://github.com/nanoedge/edge-agent/archive/refs/tags/ci-20210521-091340.tar.gz))
@@ -34,7 +29,7 @@
 
 ## 前置要求
 
-首先用户需要[创建产品]()和[创建设备]()。
+首先用户需要[创建产品](../quick_start/create_product.md)和[创建设备](../quick_start/create_device)。
 
 ## 参数配置
 
