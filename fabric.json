@@ -13,7 +13,7 @@
         },
         {
           "title": "应用场景",
-          "path": "introduction/app"
+          "path": "introduction/application"
         }
       ]
     },
@@ -22,11 +22,23 @@
       "children": [
         {
           "title": "创建产品",
-          "path": "quick/create_product.md"
+          "path": "quick_start/create_product"
         },
         {
           "title": "创建设备",
-          "path": "quick/create_device.md"
+          "path": "quick_start/create_device"
+        },
+        {
+          "title": "创建物模型",
+          "path": "quick_start/create_thing_model"
+        },
+        {
+          "title": "创建任务",
+          "path": "quick_start/create_task"
+        },
+        {
+          "title": "物模型数据上报",
+          "path": "quick_start/device_data_upload"
         }
       ]
     },
@@ -34,28 +46,16 @@
       "title": "设备接入",
       "children": [
         {
-          "title": "创建产品",
-          "path": "./"
-        },
-        {
           "title": "产品管理",
-          "path": "device_access/product_management.md"
+          "path": "device_access/product_management"
         },
         {
           "title": "设备管理",
-          "path": "device_access/device_management.md"
-        },
-        {
-          "title": "创建设备",
-          "path": "introduction/checklist"
-        },
-        {
-          "title": "物模型创建",
-          "path": "introduction/checklist"
+          "path": "device_access/device_management"
         },
         {
           "title": "设备SDK使用",
-          "path": "introduction/checklist"
+          "path": "device_access/fabric-SDK"
         }
       ]
     },
@@ -121,20 +121,20 @@
               "title": "物模型使用",
               "children": [
                 {
-                  "title": "规则引擎使用",
-                  "path": "platform_develop/rule_engine"
+                  "title": "调用设备方法",
+                  "path": "platform_develop/api_reference/thing_using/invokeThingAction"
                 },
                 {
-                  "title": "规则引擎使用",
-                  "path": "platform_develop/rule_engine"
+                  "title": "查询设备期望属性",
+                  "path": "platform_develop/api_reference/thing_using/queryDeviceDesiredProperty"
                 },
                 {
-                  "title": "规则引擎使用",
-                  "path": "platform_develop/rule_engine"
+                  "title": "设置设备期望属性",
+                  "path": "platform_develop/api_reference/thing_using/setDeviceDesiredProperty"
                 },
                 {
-                  "title": "规则引擎使用",
-                  "path": "platform_develop/rule_engine"
+                  "title": "设置物模型属性",
+                  "path": "platform_develop/api_reference/thing_using/setThingProperty"
                 }
               ]
             }
@@ -152,25 +152,11 @@
     },
     {
       "title": "云边协同",
-      "children": [
-        {
-          "title": "云边协同介绍",
-          "path": "./"
-        },
-        {
-          "title": "如何接入",
-          "path": "introduction/checklist"
-        }
-      ]
+      "path": "cloud_tunnel/cloud_tunnel"
     },
     {
       "title": "监控运维",
-      "children": [
-        {
-          "title": "任务",
-          "path": "ops/task"
-        }
-      ]
+      "path": "ops/task"
     },
     {
       "title": "版本发布",
@@ -180,6 +166,6 @@
           "path": "zh_CN/release/0.6.0"
         }
       ]
-    },
+    }
   ]
 }
