@@ -38,7 +38,7 @@
 
 ![产品物模型](./_assets/product_thing_model.png)
 
-可点击**编辑**按钮，对产品物模型进行编辑，物模型详情请看[物模型](TODO：)。
+可点击**编辑**按钮，对产品物模型进行编辑，物模型详情请看[物模型](../device_manager/thingmodel/add_thing_model.md)。
 
 ![编辑产品物模型](./_assets/product_edit_thing_model.png)
 
