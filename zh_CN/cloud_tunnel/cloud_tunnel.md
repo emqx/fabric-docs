@@ -15,7 +15,7 @@
   
 ## 获取edge-agent并编译
 
-[Releases 地址]([Source code(tar.gz)](https://github.com/nanoedge/edge-agent/archive/refs/tags/ci-20210521-091340.tar.gz))
+[Releases 地址 Source code(tar.gz)](https://github.com/nanoedge/edge-agent/archive/refs/tags/ci-20210521-091340.tar.gz)
 
 [github 仓库](https://github.com/nanoedge/edge-agent.git)
 

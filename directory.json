@@ -4,7 +4,7 @@
       "title": "产品介绍",
       "children": [
         {
-          "title": "fabric是什么",
+          "title": "Fabric 是什么",
           "path": "introduction/fabric"
         },
         {
@@ -55,7 +55,7 @@
         },
         {
           "title": "设备SDK使用",
-          "path": "device_access/fabric-SDK"
+          "path": "device_access/fabric_sdk"
         }
       ]
     },
@@ -70,11 +70,11 @@
               "children": [
                 {
                   "title": "什么是物模型",
-                  "path": "device_manager/thingmodel/introduction/What'is thing model"
+                  "path": "device_manager/thingmodel/introduction/what_is_thing_model"
                 },
                 {
                   "title": "物模型TSL",
-                  "path": "device_manager/thingmodel/introduction/Thing specification language"
+                  "path": "device_manager/thingmodel/introduction/thing_specification_language"
                 }
               ]
             },
@@ -163,9 +163,10 @@
       "children": [
         {
           "title": "0.6.0",
-          "path": "zh_CN/release/0.6.0"
+          "path": "release/0.6.0"
         }
       ]
     }
-  ]
+  ],
+  "en": []
 }

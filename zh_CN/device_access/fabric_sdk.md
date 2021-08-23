@@ -31,4 +31,4 @@ make install
 
 ## 使用
 
-具体使用可参照[设备端数据上报](../quick/device_data_upload.md)
+具体使用可参照[设备端数据上报](../quick_start/device_data_upload.md)

@@ -8,11 +8,11 @@
 
 ## 创建产品
 
-登陆EMQ X Fabric 物联网平台，常见产品具体参见[创建产品](./create_product.md)
+登陆EMQ X Fabric 物联网平台，常见产品具体参见[创建产品](../../quick_start/create_product.md)
 
 ## 创建设备
 
-创建设备具体参见[创建设备](./create_device.md)
+创建设备具体参见[创建设备](../../quick_start/create_device.md)
 
 ## 创建物模型
 
