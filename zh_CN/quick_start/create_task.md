@@ -2,7 +2,7 @@
 
 ## 前置要求
 
-首先我们需要完成[创建产品]( ./create_device.md)和[创建设备](./create_product.md)，完成了[物模型创建](./create_thing_model.md)和[设备数据上报](./device_data_upload.md)。
+首先我们需要完成[创建产品](./create_device.md)和[创建设备](./create_product.md)，完成了[物模型创建](./create_thing_model.md)和[设备数据上报](./device_data_upload.md)。
 
 ## 创建批量服务任务
 
@@ -24,7 +24,7 @@
 
 选择作业的起止时间和频次。
 
-![image-20210813190443787](/Users/hom/Library/Application Support/typora-user-images/image-20210813190443787.png)
+![image-20210813190443787](./_assets/image-20210813190443787.png)
 
 然后添加响应的执行指令并创建。
 
