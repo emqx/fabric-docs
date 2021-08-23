@@ -1,20 +1,11 @@
-# 目录说明
-## introduction
-  产品介绍
+# Fabric 介绍
 
-## quick
-  快速入门
-## device_access
-  设备接入
+## Fabric 是什么？
 
-## platform_develop
-  平台开发
+Fabric 是基于 EMQ 核心产品(EMQ X Enterprise、Neuron、NanoMQ、ekuiper、HstreamDB 等)构建的基础 IoT 平台框架，提供设备管理、设备影子、物模型、批量任务、云边协同、集群管理、异地多活等 IoT 平台核心功能，让业务基于 Fabric 快速实现各领域的 IoT 平台、聚焦业务。
 
-## cloud_tunnel
-  云边协同
 
-## ops
-  运维监控
+## iot 平台架构
+![](./introduction/assets/architecture.png)
 
-## release
-  版本发布  
+如上，fabric 即为图中间红色虚线部份，是承接设备端连接与对上层应用提供核心数据的平台。
