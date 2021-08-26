@@ -12,7 +12,7 @@ fabric sdk依赖以下组件
 
 ## 获取SDK
 
-[emqx-platform-sdk](https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.6.0.tar.gz)
+[emqx-platform-sdk](https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.6.1.tar.gz)
 
 ## 编译
 
