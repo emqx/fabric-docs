@@ -12,20 +12,13 @@
 
 - 边缘端服务的实时响应
 
-  
-## 获取edge-agent并编译
+## 获取edge-agent
 
-[Releases 地址 Source code(tar.gz)](https://github.com/nanoedge/edge-agent/archive/refs/tags/ci-20210521-091340.tar.gz)
+[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.0/edge-agent-bin-x86_64.tar.gz)
 
-[github 仓库](https://github.com/nanoedge/edge-agent.git)
+[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.0/edge-agent-bin-aarch64.tar.gz)
 
-- 编译
-
-  ```cargo build --release
-  cargo build --release
-  ```
-
-- 更多编译方式，可参考[github page cross compile](https://github.com/nanoedge/edge-agent/blob/main/docs/zh_CN/cross-compile.md)。
+[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.0/edge-agent-bin-armv7.tar.gz)
 
 ## 前置要求
 
