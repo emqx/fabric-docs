@@ -2,7 +2,7 @@
 
 ## 依赖
 
-fabric sdk依赖以下组件
+fabric sdk 依赖以下组件
 
 - [json-c](https://github.com/json-c/json-c.git)
 - [paho.mqtt.c](https://github.com/eclipse/paho.mqtt.c.git)

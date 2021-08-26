@@ -2,7 +2,7 @@
 
 ## 物模型数据上报
 
-- 修改thing_model_demo.c 的三元组信息为设备对应的三元组信息
+- 修改 thing_model_demo.c 的三元组信息为设备对应的三元组信息
 
 ```c
 char *product_key = "KS78JR0J";
@@ -10,14 +10,21 @@ char *device_name = "testdemo";
 char *secret = "5b28b44337b53ef5261d6335af5c8075";
 ```
 
-- 修改 host 和port
+- 修改 host 和 port
 
 ```C
 char *host = "8.136.220.253";
 int port = 1883;
 ```
 
-- 根据已定义好的物模型所对应TSL修改model_id
+- 设置重连间隔和重连次数
+
+```C
+int reconnect_interval = 10;
+int reconnect_time = 3;
+```
+
+- 根据已定义好的物模型所对应 TSL 修改 model_id
 
 ```c
 char *model_id = "test_model_id";
@@ -26,27 +33,72 @@ char *model_id = "test_model_id";
 - 属性参数修改
 
 ```c
-int val_i1 = 23;
-int val_i2 = 23;
-char val_s3[16] = "text";
-double val_d4 = 23.7;
+// 原生类型参数设置
+int    val_i1     = 0;
+int    val_i2     = 0;
+char   val_s3[16] = "text";
+double val_d4     = 23.7;
+double val_d5     = 23.7;
+char   val_s6[16] = "1629344092";
 
-val_t val_vec[] = {
-    {EMQC_TM_INT, "property_111", (void*)&val_i1},
-    {EMQC_TM_INT, "property_222", (void*)&val_i2},
-    {EMQC_TM_STR, "property_3", (void*)val_s3},
-    {EMQC_TM_DOUBLE, "property_222", (void*)&val_d4},
-    {EMQC_TM_STR, "", NULL},
+// 结构体类型参数设置
+emqc_tm_object val_struct[] = {
+    { .type = EMQC_TM_INT, "aaaa", .val_i = 0 },
+    { .type = EMQC_TM_INT, "bbbb", .val_i = 0 },
+    { .type = EMQC_TM_DOUBLE, "cccc", .val_d = 0.0 },
+    { .type = EMQC_TM_TERMINATOR, "", .val_o = NULL }
+};
+
+// 数组类型参数设置
+int *val_arr_int[] = {&val_i1, &val_i2, NULL};
+double *val_arr_dou[] = {&val_d4, &val_d5, NULL};
+char *val_arr_str[] = {val_s3, val_s6, NULL};
+
+// 结构体数组类型设置
+emqc_tm_object val_struct1[] = {
+    { EMQC_TM_INT, "asdf", .val_i = 0 },
+    { EMQC_TM_INT, "hjkl", .val_i = 0 },
+    // 这里是作为结束符必须的
+    { EMQC_TM_TERMINATOR, "", .val_o = NULL } 
+};
+
+
+emqc_tm_object val_struct2[] = {
+    { EMQC_TM_INT, "asdf", .val_i = 0 },
+    { EMQC_TM_INT, "hjkl", .val_i = 0 },
+    // 这里是作为结束符必须的
+    { EMQC_TM_TERMINATOR, "", .val_o = NULL } 
+};
+
+emqc_tm_object *val_arr_struct[] = {
+    val_struct1,
+    val_struct2,
+    NULL // 这里是作为结束符必须的
+};
+
+// 最终要上报的数据全部配置到这里
+emqc_tm_object property_array[] = {
+    { .type = EMQC_TM_INT,  .key = "property_a1", .val_i = 10 },
+    { .type = EMQC_TM_DOUBLE,  .key = "property_a2", .val_d = 10.10 },
+    { .type = EMQC_TM_STR,  .key = "property_a3", .val_s = val_s6 },
+    { .type = EMQC_TM_STRUCT,  .key = "property_b", .val_o = &val_struct },
+    { .type = EMQC_TM_ARR_INT,  .key = "property_c", .val_o = &val_arr_int },
+    { .type = EMQC_TM_ARR_DOUBLE,  .key = "property_d", .val_o = &val_arr_dou },
+    { .type = EMQC_TM_ARR_STR,  .key = "property_e", .val_o = &val_arr_str },
+    { .type = EMQC_TM_ARR_STRUCT,  .key = "property_f", .val_o = &val_arr_struct },
+    // 这里是作为结束符必须的
+    { .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
 };
 ```
 
 - 事件参数修改
 
 ```c
-char *event_ident = "event_type";
-int event_val1 = 33;
-val_t val_event_vec[] = {
-    {EMQC_TM_INT, "event1111", (void*) &event_val1}
+char *event_ident     = "event_type";
+emqc_tm_object event_array[] = { 
+    { .type = EMQC_TM_INT, .key = "event1111", .val_i = 0 }, 
+    { .type = EMQC_TM_DOUBLE, .key = "event2222", .val_d = 0.0 },
+    { .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
 };
 ```
 
@@ -93,9 +145,9 @@ void *service_cb(void *payload)
 
 ## 设备影子数据上报
 
-- 同物模型相同首先要修改三元组信息以及host地址和端口号
+- 同物模型相同首先要修改三元组信息以及 host 地址和端口号
 
-- 通过sdk提供的一些设置函数，设置三元组，以及对应的回调函数
+- 通过 sdk 提供的一些设置函数，设置三元组，以及对应的回调函数
 
 ```C
 emqc_ds *ds = emqc_ds_new();
@@ -115,7 +167,7 @@ emqc_ds_init(ds, host, port);
 rc = emqc_ds_connect(ds, 60, 1);
 ```
 
-- 设置请求的body
+- 设置请求的 body
 
 ```C
 serv_req *re_update = new_request();
@@ -125,7 +177,7 @@ char *t2[] = {"11","22","33","44","55"};
 add_param_arr(re_update, key, t2, STR, 5, st); 
 ```
 
-可以通过``add_param``系列函数添加不同类型的数据，如下：
+可以通过 ``add_param`` 系列函数添加不同类型的数据，如下：
 
 ```C
 int add_param_null(serv_req *request, const char *key, emqc_ds_state s);
@@ -156,5 +208,4 @@ EMQC_ERR_CODE emqc_ds_asyn_delete(emqc_ds *handle, serv_req *request);
 emqc_disconnect(ds->handle);
 emqc_ds_destroy(ds);
 ```
-
 
