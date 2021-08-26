@@ -2,7 +2,7 @@
 
 ## 物模型数据上报
 
-- 修改thing_model_demo.c 的三元组信息为设备对应的三元组信息
+- 修改 thing_model_demo.c 的三元组信息为设备对应的三元组信息
 
 ```c
 char *product_key = "KS78JR0J";
@@ -10,7 +10,7 @@ char *device_name = "testdemo";
 char *secret = "5b28b44337b53ef5261d6335af5c8075";
 ```
 
-- 修改 host 和port
+- 修改 host 和 port
 
 ```C
 char *host = "8.136.220.253";
@@ -24,7 +24,7 @@ int reconnect_interval = 10;
 int reconnect_time = 3;
 ```
 
-- 根据已定义好的物模型所对应TSL修改model_id
+- 根据已定义好的物模型所对应 TSL 修改 model_id
 
 ```c
 char *model_id = "test_model_id";
@@ -145,9 +145,9 @@ void *service_cb(void *payload)
 
 ## 设备影子数据上报
 
-- 同物模型相同首先要修改三元组信息以及host地址和端口号
+- 同物模型相同首先要修改三元组信息以及 host 地址和端口号
 
-- 通过sdk提供的一些设置函数，设置三元组，以及对应的回调函数
+- 通过 sdk 提供的一些设置函数，设置三元组，以及对应的回调函数
 
 ```C
 emqc_ds *ds = emqc_ds_new();
@@ -167,7 +167,7 @@ emqc_ds_init(ds, host, port);
 rc = emqc_ds_connect(ds, 60, 1);
 ```
 
-- 设置请求的body
+- 设置请求的 body
 
 ```C
 serv_req *re_update = new_request();
@@ -177,7 +177,7 @@ char *t2[] = {"11","22","33","44","55"};
 add_param_arr(re_update, key, t2, STR, 5, st); 
 ```
 
-可以通过``add_param``系列函数添加不同类型的数据，如下：
+可以通过 ``add_param`` 系列函数添加不同类型的数据，如下：
 
 ```C
 int add_param_null(serv_req *request, const char *key, emqc_ds_state s);
