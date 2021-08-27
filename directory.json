@@ -160,6 +160,10 @@
     },
     {
       "title": "版本发布",
+        {
+          "title": "0.7.0",
+          "path": "release/0.7.0"
+        },
       "children": [
         {
           "title": "0.6.0",
