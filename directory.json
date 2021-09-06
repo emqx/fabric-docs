@@ -108,6 +108,41 @@
               "path": "device_manager/shadow/json_message"
             }
           ]
+        },
+        {
+          "title": "数据解析",
+          "children": [
+            {
+              "title": "什么是数据解析",
+              "path": "device_manager/dataparsing/what_is_data_parsing"
+            },
+            {
+              "title": "自定义topic数据解析",
+              "children": [
+                {
+                  "title": "提交数据解析脚本",
+                  "path": "device_manager/dataparsing/user_defined_topic_data_parsing/post_data_parsing_script"
+                },
+                {
+                  "title": "JavaScript脚本示例",
+                  "path": "device_manager/dataparsing/user_defined_topic_data_parsing/javascript_use_case"
+                }
+              ]
+            },
+            {
+              "title": "物模型数据解析",
+              "children": [
+                {
+                  "title": "物模型数据解析使用示例",
+                  "path": "device_manager/dataparsing/user_defined_thing_model_data_parsing/thing_model_data_parsing_user_case"
+                },
+                {
+                  "title": "JavaScript脚本示例",
+                  "path": "device_manager/dataparsing/user_defined_thing_model_data_parsing/javascript_use_case"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
@@ -161,6 +196,10 @@
     {
       "title": "版本发布",
       "children": [
+        {
+          "title": "0.7.0",
+          "path": "release/0.7.0"
+        },
         {
           "title": "0.6.0",
           "path": "release/0.6.0"
