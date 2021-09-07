@@ -5,7 +5,7 @@
 ## 脚本模板
 ```javascript
 /**
-* 入参：topic，字符串，设备上报消息的Topic。
+* 入参：topic，字符串，设备上报消息的topic。
 * 入参：bytes，byte[]数组，不能为空。
 * 出参：jsonObj，对象，不能为空。
 */
@@ -28,19 +28,19 @@ var SELF_DEFINE_TOPIC_ERROR_FLAG = '/user/update/error' //自定义topic后缀�
   自定义topic：
      /user/update，上报数据。
   输入参数：
-     topic: /${productKey}/${deviceName}/user/update
-     bytes: 0x000000000100320100000000
+     topic: /fabric/sys/${productKey}/${deviceName}/user/update
+     bytes: 0x00020100c203110213010400
   输出参数：
-  {
-     "prop_float": 0,
-     "prop_int16": 50,
-     "prop_bool": 1
-   }
+    {
+      "param_int1": 785,
+      "param_int2": 256,
+      "param_int3": 513
+    }
  */
 function transformPayload(topic, bytes) {
     var uint8Array = new Uint8Array(bytes.length);
     for (var i = 0; i < bytes.length; i++) {
-        uint8Array[i] = bytes[i] & 0xff;
+        uint8Array[i] = bytes[i];
     }
     var dataView = new DataView(uint8Array.buffer, 0);
     var jsonMap = {};
@@ -48,9 +48,9 @@ function transformPayload(topic, bytes) {
     if(topic.includes(SELF_DEFINE_TOPIC_ERROR_FLAG)) {
         jsonMap['code'] = dataView.getInt8(0)
     } else if (topic.includes(SELF_DEFINE_TOPIC_UPDATE_FLAG)) {
-        jsonMap['param_int16'] = dataView.getInt16(5);
-        jsonMap['param_bool'] = uint8Array[7];
-        jsonMap['param_float'] = dataView.getFloat32(8);
+        jsonMap['param_int1'] = dataView.getInt16(5);
+        jsonMap['param_int2'] = dataView.getInt16(2);
+        jsonMap['param_int3'] = dataView.getInt16(1);
     }
     return jsonMap;
 }
