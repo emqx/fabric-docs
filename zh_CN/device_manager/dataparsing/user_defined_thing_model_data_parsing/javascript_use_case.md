@@ -26,50 +26,67 @@ function rawDataToThingProtocol(bytes) {
 
 ## 脚本示例
 ```javascript
-var COMMAND_REPORT = 0x00; //属性上报。
-var COMMAND_SET = 0x01; //属性设置。
-var COMMAND_REPORT_REPLY = 0x02; //上报数据返回结果。
-var COMMAND_SET_REPLY = 0x03; //属性设置设备返回结果。
-var COMMAD_UNKOWN = 0xff;    //未知的命令。
-var THING_PROP_REPORT_METHOD = 'thing.property.post'; //物联网平台Topic，设备上传属性数据到云端。
-var THING_PROP_SET_METHOD = 'thing.property.set'; //物联网平台Topic，云端下发属性控制指令到设备端。
-var THING_PROP_SET_REPLY_METHOD = 'thing.property.set'; //物联网平台Topic，设备上报属性设置的结果到云端。
-var SELF_DEFINE_TOPIC_UPDATE_FLAG = '/user/update'  //自定义Topic：/user/update。
-var SELF_DEFINE_TOPIC_ERROR_FLAG = '/user/update/error' //自定义Topic：/user/update/error。
+var COMMAND_REPORT = 0x00; //表示当前消息为设备上报属性。
+var COMMAND_SET = 0x01; //表示当前消息为平台下发属性设置。
+var COMMAND_REPORT_REPLY = 0x02; //表示当前消息为设备上报属性后，平台返回的响应。
+var COMMAND_SET_REPLY = 0x03; //表示当前消息为属性设置后设备的响应。
+var THING_PROP_REPORT_METHOD = 'thing.property.post'; //设备上传属性数据到平台时，需要在payload中添加的method字段。
+var THING_PROP_SET_METHOD = 'thing.property.set'; //平台下发属性控制命令到设备端时，在payload中添加的method字段。
+var THING_PROP_SET_REPLY_METHOD = 'thing.property.set'; //设备响应属性设置的结果到平台，需要在payload中添加的method字段。
+var SELF_DEFINE_TOPIC_UPDATE_FLAG = '/user/update'  //自定义topic后缀：/user/update。
+var SELF_DEFINE_TOPIC_ERROR_FLAG = '/user/update/error' //自定义topic后缀：/user/update/error。
 /*
-示例数据：
-设备上报属性数据：
+示例：
+设备上报属性：
 传入参数：
-    0x000000000100320100000000
+    0x0010100c0200410600080000
 输出结果：
-    {"method":"thing.property.post","id":"1","params":{"param_float":0,"param_int16":50,"param_bool":1},"version":"1.0"}
+    {
+      "id": "269487106",
+      "method": "thing.property.post",
+      "params": {
+        "param_int1": 65,
+        "param_int2": 4108,
+        "param_int3": 4112
+      },
+      "version": "1.0"
+    }
 
-属性设置的返回结果：
+属性设置后，设备返回的响应：
 传入参数：
-    0x0300223344c8
+    0x0000117a18b5184781732a
 输出结果：
-    {"code":"200","data":{},"id":"2241348","version":"1.0"}
+    {
+      "id": "1145368",
+      "method": "thing.property.post",
+      "params": {
+        "param_int1": -19176,
+        "param_int2": 4474,
+        "param_int3": 17
+      },
+      "version": "1.0"
+    }
 */
 function rawDataToThingProtocol(bytes) {
     var uint8Array = new Uint8Array(bytes.length);
     for (var i = 0; i < bytes.length; i++) {
-        uint8Array[i] = bytes[i] & 0xff;
+        uint8Array[i] = bytes[i];
     }
     var dataView = new DataView(uint8Array.buffer, 0);
     var jsonMap = new Object();
     var fHead = uint8Array[0]; // command
     if (fHead == COMMAND_REPORT) {
-        jsonMap['method'] = THING_PROP_REPORT_METHOD; //JSON格式，属性上报topic。
-        jsonMap['version'] = '1.0'; //JSON格式，协议版本号固定字段。
-        jsonMap['id'] = '' + dataView.getInt32(1); //JSON格式，标识该次请求id值。
+        jsonMap['method'] = THING_PROP_REPORT_METHOD; //属性上报的method。
+        jsonMap['version'] = '1.0'; //协议版本号固定字段。
+        jsonMap['id'] = '' + dataView.getInt32(1); //标识该次请求id值。
         var params = {};
-        params['param_int16'] = dataView.getInt16(5); //对应产品属性中param_int16。
-        params['param_bool'] = uint8Array[7]; //对应产品属性中param_bool。
-        params['param_float'] = dataView.getFloat32(8); //对应产品属性中param_float。
-        jsonMap['params'] = params; //JSON格式，params标准字段。
+        params['param_int1'] = dataView.getInt16(5); //对应物模型属性中param_int1。
+        params['param_int2'] = dataView.getInt16(2); //对应物模型属性中param_int2。
+        params['param_int3'] = dataView.getInt16(1); //对应物模型属性中param_int3。
+        jsonMap['params'] = params; //params标准字段。
     } else if(fHead == COMMAND_SET_REPLY) {
-        jsonMap['version'] = '1.0'; //JSON格式，协议版本号固定字段。
-        jsonMap['id'] = '' + dataView.getInt32(1); //JSON格式，标识该次请求id值。
+        jsonMap['version'] = '1.0'; //协议版本号固定字段。
+        jsonMap['id'] = '' + dataView.getInt32(1); //标识该次请求id值
         jsonMap['code'] = ''+ dataView.getUint8(5);
         jsonMap['data'] = {};
     }
@@ -78,83 +95,74 @@ function rawDataToThingProtocol(bytes) {
 }
 /*
 示例数据：
-云端下发属性设置指令：
+平台下发属性设置命令：
 传入参数：
-    {"method":"thing.property.set","id":"12345","version":"1.0","params":{"param_float":123.452, "param_int16":333, "param_bool":1}}
-输出结果：
-    0x0100003039014d0142f6e76d
+    {"method":"thing.property.set","id":"123456","version":"1.0","params":{"param_int1":123, "param_int2":456, "param_int3":789}}
+输出结果（十六进制表示）：
+    010001e240007b01c80315
 
 设备上报的返回结果：
 传入数据：
-    {"method":"thing.property.post","id":"12345","version":"1.0","code":200,"data":{}}
-输出结果：
-    0x0200003039c8
+    {"method":"thing.property.post","id":"123456","version":"1.0","code":0,"data":{}}
+输出结果（十六进制表示）：
+    0x020001e24000
 */
 function thingProtocolToRawData(json) {
     var method = json['method'];
     var id = json['id'];
     var version = json['version'];
-    var payloadArray = [];
+    var rawData = [];
     if (method == THING_PROP_SET_METHOD) //属性设置。
     {
         var params = json['params'];
-        var param_float = params['param_float'];
-        var param_int16 = params['param_int16'];
-        var param_bool = params['param_bool'];
+        var param_int1 = params['param_int1'];
+        var param_int2 = params['param_int2'];
+        var param_int3 = params['param_int3'];
         //按照自定义协议格式拼接 rawData。
-        payloadArray = payloadArray.concat(buffer_uint8(COMMAND_SET)); //command字段。
-        payloadArray = payloadArray.concat(buffer_int32(parseInt(id))); //JSON格式 'id'。
-        payloadArray = payloadArray.concat(buffer_int16(param_int16)); //属性'param_int16'的值。
-        payloadArray = payloadArray.concat(buffer_uint8(param_bool)); //属性'param_bool'的值。
-        payloadArray = payloadArray.concat(buffer_float32(param_float)); //属性'param_float'的值。
+        rawData = rawData.concat(buffer_uint8(COMMAND_SET)); //command字段
+        rawData = rawData.concat(buffer_int32(parseInt(id))); //标识该次请求id值
+        rawData = rawData.concat(buffer_int16(param_int1)); //属性'param_int1'的值
+        rawData = rawData.concat(buffer_int16(param_int2)); //属性'param_int2'的值
+        rawData = rawData.concat(buffer_int16(param_int3)); //属性'param_int3'的值
     } else if (method ==  THING_PROP_REPORT_METHOD) { //设备上报数据返回结果。
         var code = json['code'];
-        payloadArray = payloadArray.concat(buffer_uint8(COMMAND_REPORT_REPLY)); //command字段。
-        payloadArray = payloadArray.concat(buffer_int32(parseInt(id))); //JSON格式'id'。
-        payloadArray = payloadArray.concat(buffer_uint8(code));
-    } else { //未知命令，对于这些命令不做处理。
-        var code = json['code'];
-        payloadArray = payloadArray.concat(buffer_uint8(COMMAD_UNKOWN)); //command字段。
-        payloadArray = payloadArray.concat(buffer_int32(parseInt(id))); //JSON格式'id'。
-        payloadArray = payloadArray.concat(buffer_uint8(code));
+        rawData = rawData.concat(buffer_uint8(COMMAND_REPORT_REPLY)); //command字段
+        rawData = rawData.concat(buffer_int32(parseInt(id))); //标识该次请求id值
+        rawData = rawData.concat(buffer_uint8(code));
     }
-    return payloadArray;
+    return rawData;
 }
 
 /*
   示例数据
-  自定义Topic：
+  自定义topic：
      /user/update，上报数据。
   输入参数：
-     topic:/${productKey}/${deviceName}/user/update
-     bytes: 0x000000000100320100000000
+     topic:/fabric/sys/${productKey}/${deviceName}/user/update
+     bytes: 0x00020100c203110213010400
   输出参数：
-  {
-     "param_float": 0,
-     "param_int16": 50,
-     "param_bool": 1,
-     "topic": "/${productKey}/${deviceName}/user/update"
-   }
+    {
+      "param_int1": 785,
+      "param_int2": 256,
+      "param_int3": 513
+    }
  */
 function transformPayload(topic, bytes) {
     var uint8Array = new Uint8Array(bytes.length);
     for (var i = 0; i < bytes.length; i++) {
-        uint8Array[i] = bytes[i] & 0xff;
+        uint8Array[i] = bytes[i];
     }
     var dataView = new DataView(uint8Array.buffer, 0);
-    var jsonMap = {};
+    var json = {};
 
     if(topic.includes(SELF_DEFINE_TOPIC_ERROR_FLAG)) {
-        jsonMap['topic'] = topic;
-        jsonMap['errorCode'] = dataView.getInt8(0)
+        json['code'] = dataView.getInt8(0)
     } else if (topic.includes(SELF_DEFINE_TOPIC_UPDATE_FLAG)) {
-        jsonMap['topic'] = topic;
-        jsonMap['param_int16'] = dataView.getInt16(5);
-        jsonMap['param_bool'] = uint8Array[7];
-        jsonMap['param_float'] = dataView.getFloat32(8);
+        json['param_int1'] = dataView.getInt16(5);
+        json['param_int2'] = dataView.getInt16(2);
+        json['param_int3'] = dataView.getInt16(1);
     }
-
-    return jsonMap;
+    return json;
 }
 
 //以下是部分辅助函数。

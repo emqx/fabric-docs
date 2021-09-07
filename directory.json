@@ -56,6 +56,20 @@
         {
           "title": "设备SDK使用",
           "path": "device_access/fabric_sdk"
+        },
+		{
+          "title": "开放协议接入",
+		  "children":[
+		    {
+		      "title":"使用MQTT协议接入",
+			  "children":[
+			    {
+			      "title":"",
+			      "path":"device_access/open_protocol_access/access_by_mqtt_protocol/use_three_tuple_to_access"
+			    }
+			  ]
+		    }
+		  ]
         }
       ]
     },
