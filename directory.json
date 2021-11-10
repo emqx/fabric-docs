@@ -159,6 +159,10 @@
       "path": "ops/task"
     },
     {
+      "title": "api认证",
+      "path": "api_auth/ak_sk"
+    },
+    {
       "title": "版本发布",
       "children": [
         {
