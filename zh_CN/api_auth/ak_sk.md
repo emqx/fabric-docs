@@ -8,7 +8,7 @@
 
 在fabric管理页面上创建、删除自己的AK/SK。
 
-![创建AK/SK](./_assets/create_aksk.png)
+![创建AK/SK](./_assets/aksk.png)
 
 ## 使用AK/SK
 
