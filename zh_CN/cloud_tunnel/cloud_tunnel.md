@@ -17,11 +17,11 @@
 
 ## 获取edge-agent
 
-[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.0/edge-agent-bin-x86_64.tar.gz)
+[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-x86_64.tar.gz)
 
-[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.0/edge-agent-bin-aarch64.tar.gz)
+[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-aarch64.tar.gz)
 
-[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.0/edge-agent-bin-armv7.tar.gz)
+[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-armv7.tar.gz)
 
 ## 前置要求
 
