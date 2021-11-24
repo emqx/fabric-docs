@@ -43,7 +43,7 @@ signature = HexEncode(sha1(Secret Access Key+ExpireTime+URL))
 Authorization: Access=[Access Key Id], ExpireTime=[expire_time], Signature=[signature]
 ```
 
-1. 需要注意的是算法与Access之前有空格但没有逗号，但是ExpireTime与Signature之前需要使用逗号加空格隔开。
+1. 需要注意的是：Access之前没有逗号，但是ExpireTime与Signature之前需要使用逗号加空格隔开。
 
 ### Postman使用示例：
 
