@@ -5,11 +5,11 @@
 使用 ssh/http 通道需要在设备端安装我们的 Agent 客户端，由 Agent 负责与平台建立 tcp 通道
 
 ## 获取edge-agent
-[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.3/edge-agent-bin-x86_64.tar.gz)
+[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-x86_64.tar.gz)
 
-[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.3/edge-agent-bin-aarch64.tar.gz)
+[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-aarch64.tar.gz)
 
-[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.3/edge-agent-bin-armv7.tar.gz)
+[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-armv7.tar.gz)
 
 ## 前置要求
 首先用户需要[创建产品](../quick_start/create_product.md)和[创建设备](../quick_start/create_device)。
