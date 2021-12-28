@@ -33,7 +33,7 @@
 
 | 参数  | 类型  | 说明  |
 | :------------ | :------------ | :------------ |
-| params  | object  | value 可以是普通的值类型，比如: `"Switch:"on"` <br/>也可以是结构体，可以附带其他参数，比如时间戳: <br/> `"Switch": { "value": "on",  "time": 1634841971000}` |
+| params  | object  | value 可以是普通的值类型，比如: <br/>`"Switch:"on"` <br/>也可以是结构体，可以附带其他参数，比如时间戳: <br/> `"Switch": { "value": "on",  "time": 1634841971000}` |
 | sys  | object  | 扩展功能  |
 | ack  | int  | sys扩展功能中的参数，表示是否需要平台返回响应 <br/> - 1: 需要平台返回响应 <br/> - 2: 不需要平台返回响应 |
 
@@ -57,7 +57,7 @@
 
 ## 属性设置
 
-* 平台端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/set`
+* 平台端请求的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/set`
 * 请求数据格式：
 
 ```json
@@ -75,7 +75,7 @@
 
 <table>
   <tr> <td> 参数 </td>  <td> 类型 </td> <td> 说明 </td> </tr>
-   <tr> <td> params </td> <td> object </td> <td> params可以可以用键值对的形式传递参数，比如：<br/> 
+   <tr> <td> params </td> <td> object </td> <td> params 可以用键值对的形式传递参数，比如：<br/> 
 
 ```
  "params": {
@@ -99,7 +99,7 @@
 </td> </tr>
 </table>
 
-* 设备端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/set_reply`
+* 设备端响应的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/set_reply`
 * 响应数据格式：
 
 ```json
@@ -132,7 +132,35 @@
 }
 ```
 
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/event/model_id:identifier/post_reply`
+* 参数说明
+
+<table>
+  <tr> <td> 参数 </td>  <td> 类型 </td> <td> 说明 </td> </tr>
+   <tr> <td> params </td> <td> object </td> <td> params 可以用键值对的形式传递参数，比如：<br/> 
+
+```
+ "params": {
+     "Switch": "on", 
+     "Wifi": "close"
+ } 
+```
+
+<br/> 当需要额外传递时间戳时，需使用结构体将所有参数包装起来：<br/> 
+
+```
+"params":{
+    "value": {
+        "Switch": "on",
+        "Wifi": "close"
+    },
+    "time": 1634841971000
+}
+```
+
+</td> </tr>
+</table>
+
+* 平台端响应的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/event/model_id:identifier/post_reply`
 * 响应数据格式：
 ```json
 {
@@ -144,7 +172,7 @@
 
 ## 设备方法调用（异步）
 
-* 平台端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/action/model_id:identifier/exec`
+* 平台端请求的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/action/model_id:identifier/exec`
 * 请求数据格式：
 
 ```json
@@ -159,7 +187,7 @@
 }
 ```
 
-* 设备端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/action/model_id:identifier/exec_reply`
+* 设备端响应的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/action/model_id:identifier/exec_reply`
 * 响应数据格式：
 
 ```json
@@ -174,7 +202,7 @@
 ```
 ## 设备方法调用（同步）
 
-* 平台端请求的topic: `/fabric/sys/${productKey}/${deviceName}/rrpc/request/${messageId}`
+* 平台端请求的 topic: `/fabric/sys/${productKey}/${deviceName}/rrpc/request/${messageId}`
 * 请求数据格式：
 
 ```json
@@ -189,7 +217,7 @@
 }
 ```
 
-* 设备端响应的topic: `/fabric/sys/${productKey}/${deviceName}/rrpc/response/${messageId}`
+* 设备端响应的 topic: `/fabric/sys/${productKey}/${deviceName}/rrpc/response/${messageId}`
 * 响应数据格式：
 ```json
 {
@@ -204,7 +232,7 @@
 
 ## 设备获取期望属性
 
-* 设备端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/get`
+* 设备端请求的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/get`
 * 请求数据格式：
 
 ```json
@@ -219,7 +247,7 @@
 }
 ```
 
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/get_reply`
+* 平台端响应的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/get_reply`
 * 响应数据格式：
 
 ```json
@@ -241,7 +269,7 @@
 
 ## 设备删除期望属性
 
-* 设备端请求的topic: `//fabric/sys/${productKey}/${deviceName}/thing/property/desired/delete`
+* 设备端请求的 topic: `//fabric/sys/${productKey}/${deviceName}/thing/property/desired/delete`
 * 请求数据格式：
 
 ```json
@@ -286,7 +314,7 @@
 </td> </tr>
 </table>
 
-* 平台端响应的topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/delete_reply`
+* 平台端响应的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/property/desired/delete_reply`
 * 响应数据格式：
 
 ```json
