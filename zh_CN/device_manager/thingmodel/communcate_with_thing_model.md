@@ -111,7 +111,7 @@
 ```
 ## 设备事件上报
 
-* 设备端请求的topic: `/fabric/sys/${productKey}/${deviceName}/thing/event/model_id:identifier/post`
+* 设备端请求的 topic: `/fabric/sys/${productKey}/${deviceName}/thing/event/model_id:identifier/post`
 * 请求数据格式：
 
 ```json
