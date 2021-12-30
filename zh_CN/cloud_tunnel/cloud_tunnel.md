@@ -1,6 +1,9 @@
 # 云边通道简介
 
-云边通道是基于 MQTT 协议实现的边缘端设备发现与管理的通道。很多的边端设备都提供了 HTTP 服务，方便用户在局域网内通过浏览器查看服务的状态或者进行相应的设置。 但是很多时候用户需要从云端对边缘设备提供的 HTTP 服务进行访问，因为没有工网 IP，边缘端提供的 HTTP 服务无法直接进行访问。通过建立好云边通道，可以实现由云到边的反向HTTP服务的访问。
+云边通道是基于 MQTT 协议实现的边缘端设备发现与管理的通道。很多的边端设备都提供了 HTTP 服务，方便用户
+在局域网内通过浏览器查看服务的状态或者进行相应的设置。但是很多时候用户需要从云端对边缘设备提供的 HTTP 
+服务进行访问，因为没有公网 IP，边缘端提供的 HTTP 服务无法直接进行访问。通过建立好云边通道，
+可以实现由云到边的反向 HTTP 服务的访问。
 
 ## 功能
 
@@ -14,11 +17,11 @@
 
 ## 获取edge-agent
 
-[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.1/edge-agent-bin-x86_64.tar.gz)
+[edge-agent-bin-x86_64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-x86_64.tar.gz)
 
-[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.1/edge-agent-bin-aarch64.tar.gz)
+[edge-agent-bin-aarch64.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-aarch64.tar.gz)
 
-[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.6.1/edge-agent-bin-armv7.tar.gz)
+[edge-agent-bin-armv7.tar.gz](https://static.emqx.net/fabric/edge-agent-0.7.0/edge-agent-bin-armv7.tar.gz)
 
 ## 前置要求
 
