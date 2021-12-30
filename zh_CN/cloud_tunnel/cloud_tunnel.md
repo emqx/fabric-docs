@@ -27,6 +27,48 @@
 
 首先用户需要[创建产品](../quick_start/create_product.md)和[创建设备](../quick_start/create_device)。
 
+## 运行参数
+
+可通过 `edge-agent -h` 获取帮助信息, 如下：
+
+```
+edge-agent 0.1.0
+The components manager, gateway and proxy for edge device
+
+USAGE:
+    edge-agent [FLAGS] [OPTIONS] [FILE]...
+
+FLAGS:
+    -d, --daemon     Daemon mode
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+    -b, --broker <broker>          Set host [default: localhost:1883]
+    -l, --log-level <log-level>    Level mode (error, warn, info, debug, trace.) [default: info]
+    -p, --path <path>              Path/to/file [default: config.yaml]
+
+ARGS:
+    <FILE>...    Files to process
+
+```
+- daemon 启动(默认非daemon)：
+```
+sudo edge-agent -d
+```
+- 指定配置文件路径(默认情况是当前文件夹)：
+```
+edge-agent -p path/to/file
+```
+- 设置日志等级, 支持(error, warn, info, debug, trace)几种, 默认是info：
+```
+edge-agent -l log-level
+```
+- 指定broker地址(默认是localhost:1883):
+```
+edge-agent -b ip:port
+```
+
 ## 参数配置
 
 将设备的三元组信息，更新到 edge-agent 的配置文件 config.yaml。
