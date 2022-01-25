@@ -30,7 +30,128 @@ int reconnect_time = 3;
 char *model_id = "test_model_id";
 ```
 
-- 属性参数修改
+- 根据获取的物模型的 TSL 更改下列参数。
+
+  属性参数修改，根据 web 端生成的物模型描述，如下是属性相关参数，以及相关设置。
+
+```json
+"properties": [
+    {
+      "identifier": "property_a1",
+      "is_required": false,
+      "data_type": {
+        "type": "int"
+      }
+    },
+    {
+      "identifier": "property_a2",
+      "is_required": false,
+      "data_type": {
+        "type": "double"
+      }
+    },
+    {
+      "identifier": "property_a3",
+      "is_required": false,
+      "data_type": {
+        "type": "text"
+      }
+    },
+    {
+      "identifier": "property_b",
+      "is_required": false,
+      "data_type": {
+        "type": "struct",
+        "specs": [
+          {
+            "identifier": "aaaa",
+            "data_type": {
+              "type": "int"
+            }
+          },
+          {
+            "identifier": "bbbb",
+            "data_type": {
+              "type": "int"
+            }
+          },
+          {
+            "identifier": "cccc",
+            "data_type": {
+              "type": "double"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "identifier": "property_c",
+      "is_required": false,
+      "data_type": {
+        "type": "array",
+        "specs": {
+          "size": 10,
+          "item": {
+            "type": "int"
+          }
+        }
+      }
+    },
+    {
+      "identifier": "property_d",
+      "is_required": false,
+      "data_type": {
+        "type": "array",
+        "specs": {
+          "size": 10,
+          "item": {
+            "type": "double"
+          }
+        }
+      }
+    },
+    {
+      "identifier": "property_e",
+      "is_required": false,
+      "data_type": {
+        "type": "array",
+        "specs": {
+          "size": 10,
+          "item": {
+            "type": "text"
+          }
+        }
+      }
+    },
+    {
+      "identifier": "property_f",
+      "is_required": false,
+      "data_type": {
+        "type": "array",
+        "specs": {
+          "size": 10,
+          "item": {
+            "type": "struct",
+            "specs": [
+              {
+                "identifier": "asdf",
+                "data_type": {
+                  "type": "int"
+                }
+              },
+              {
+                "identifier": "hjkl",
+                "data_type": {
+                  "type": "int"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+```
 
 ```c
 // 原生类型参数设置
@@ -62,7 +183,6 @@ emqc_tm_object val_struct1[] = {
     { EMQC_TM_TERMINATOR, "", .val_o = NULL } 
 };
 
-
 emqc_tm_object val_struct2[] = {
     { EMQC_TM_INT, "asdf", .val_i = 0 },
     { EMQC_TM_INT, "hjkl", .val_i = 0 },
@@ -89,56 +209,170 @@ emqc_tm_object property_array[] = {
     // 这里是作为结束符必须的
     { .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
 };
+
 ```
 
-- 事件参数修改
+
+
+​		事件参数修改，根据 web 端生成的物模型描述，如下是事件相关参数，以及相关设置。
+
+```json
+ "events": [
+    {
+      "identifier": "events",
+      "is_required": false,
+      "event_type": "EVENT_TYPE_INFO",
+      "output_data": [
+        {
+          "identifier": "param01",
+          "data_type": {
+            "type": "array",
+            "specs": {
+              "size": 10,
+              "item": {
+                "type": "text"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+```
+
+
 
 ```c
-char *event_ident     = "event_type";
-emqc_tm_object event_array[] = { 
-    { .type = EMQC_TM_INT, .key = "event1111", .val_i = 0 }, 
-    { .type = EMQC_TM_DOUBLE, .key = "event2222", .val_d = 0.0 },
-    { .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
+char val_param01_s1[] = "param011";
+char val_param01_s2[] = "param012";
+char val_param01_s3[] = "param013";
+char val_param01_s4[] = "param014";
+char val_param01_s5[] = "param015";
+char val_param01_s6[] = "param016";
+char val_param01_s7[] = "param017";
+char val_param01_s8[] = "param018";
+char val_param01_s9[] = "param019";
+
+char *param01[] = {
+	val_param01_s1,
+	val_param01_s2,
+	val_param01_s3,
+	val_param01_s4,
+	val_param01_s5,
+	val_param01_s6,
+	val_param01_s7,
+	val_param01_s8,
+	val_param01_s9,
+	NULL
+ };
+
+char *event_idents[] = {
+	"events", // 如果有多个 identifer 顺序添加，最后一个元素一定是 NULL。
+	NULL,
 };
+emqc_tm_object event_array[] = {
+	{ .type = EMQC_TM_ARR_STR, .key = "param01", .val_o = &param01 },
+	{ .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
+ };
+
 ```
 
-- 服务参数修改
+
+
+​		服务参数修改，根据 web 端生成的物模型描述，如下是服务相关参数，以及相关设置。
+
+```json
+ "actions": [
+    {
+      "identifier": "service01",
+      "is_required": false,
+      "input_data_param": [
+        {
+          "identifier": "input_param",
+          "data_type": {
+            "type": "int"
+          }
+        }
+      ],
+      "output_data_param": [
+        {
+          "identifier": "output_param",
+          "data_type": {
+            "type": "int"
+          }
+        }
+      ]
+    }
+  ]
+```
+
+
 
 ```C
-char *service_ident = "service_type";
-char *service_in = "input_type";
-char *service_out = "output_type";
+char *service_idents[] = {
+	"service01",
+	NULL,
+};
+emqc_tm_object service_array[] = {
+	{ .type = EMQC_TM_INT, .key = "output_param", .val_i = 0 },
+	{ .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
+ };
+
 ```
 
-- 根据需求定义自己的服务，将自己的服务放到service_cb中，并处理服务服务的错误响应，以下仅为事例
+- 根据需求定义自己的服务，将自己的服务放到service_cb中，并处理服务服务的错误响应，以下仅为事例。
 
 ```C
 void *service_cb(void *payload)
 {
-    tm_request *tr = (tm_request *)payload;
-    log_info("#RECV: id: %s, version: %s, method: %s, params: %s", tr->id, tr->version, tr->method, tr->params);
+    tm_request *tr = (tm_request *) payload;
+    log_info("#RECV: id: %s, version: %s, method: %s, params: %s", tr->id,
+            tr->version, tr->method, tr->params);
     json_object *jso_tmp = json_tokener_parse(tr->params);
     json_object *jso_val = NULL;
-    int val = 0;
+    int          val     = 0;
+    char *ret = NULL;
 
-    if (json_object_object_get_ex(jso_tmp, service_in, &jso_val)) {
-        // 你的服务函数从这里开始
-        val = json_object_get_int(jso_val);
-        val *= 2;
+    int i = 0;
+    int j = 0;
+    while (service_idents[i] != NULL) {
+
+        if (!strstr(tr->method, service_idents[i])) {
+            do {
+                if (service_array[j].type == EMQC_TM_TERMINATOR) {
+                    break;
+                }
+
+            } while (++j);
+
+        } else {
+
+            json_object *jso      = json_object_new_object();
+            json_object *jso_data = json_object_new_object();
+            do {
+                if (service_array[j].type == EMQC_TM_TERMINATOR) {
+                    break;
+                }
+
+                // 这里可以加具体的操作。
+                // 根据输入计算输出。
+                emqc_tm_add_service_param(jso_data, service_array[j].key, &service_array[j]);
+            } while (++j);
+
+            json_object_object_add(jso, "id", json_object_new_string(tr->id));
+            json_object_object_add(jso, "code", json_object_new_int(0));
+            json_object_object_add(jso, "data", jso_data);
+            ret = zstrdup(json_object_to_json_string(jso));
+            json_object_put(jso);
+            break;
+        }
+        i++;
+        j++;
+
     }
-
-    json_object *jso = json_object_new_object();
-    json_object *jso_data = json_object_new_object();
-
-    json_object_object_add(jso_data, service_out, json_object_new_int(val));
-    json_object_object_add(jso, "id", json_object_new_string(tr->id));
-    json_object_object_add(jso, "code", json_object_new_int(0));
-    json_object_object_add(jso, "data", jso_data);
-    char *ret = zstrdup(json_object_to_json_string(jso));
-    json_object_put(jso);
-
-    return (void*) ret;
+    return (void *) ret;
 }
+
 ```
 
 - 到此，我们的物模型就修改完毕，重新编译，既可以上报数据了。
