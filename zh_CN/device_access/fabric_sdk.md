@@ -1,34 +1,64 @@
-# fabric SDK 安装及使用
+# emqx-platform-sdk 安装教程
 
-## 依赖
+## 项目地址
 
-fabric sdk 依赖以下组件
+[emqx-platform-sdk](https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.7.1.tar.gz)
 
-- [json-c](https://github.com/json-c/json-c.git)
-- [paho.mqtt.c](https://github.com/eclipse/paho.mqtt.c.git)
-- [openssl](https://www.openssl.org/source/)
+## 项目依赖
 
-具体安装方式可参照相关页面
+emqx-platform-sdk 需要以下依赖，编译项目前确保以下依赖已安装。
 
-## 获取SDK
+- libopenssl
+- [json-c](https://static.emqx.net/fabric/sdk/dependency/json-c.tar.gz)
+- [phao.mqtt.c](https://static.emqx.net/fabric/sdk/dependency/paho.tar.gz) 
 
-[emqx-platform-sdk](https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.6.1.tar.gz)
+## 依赖安装
 
-## 编译
+- openssl
+
+  ```shell
+  $ sudo apt-get install libssl-dev
+  ```
+
+- json-c
+
+  ```shell
+  $ git clone https://github.com/json-c/json-c.git
+  # 如果 github 连接不上，从文件服务器下载
+  $ wget https://static.emqx.net/fabric/sdk/dependency/json-c.tar.gz
+  $ mkdir json-c-build
+  $ cd json-c-build
+  $ cmake ../json-c   # See CMake section below for custom arguments
+  $ make
+  $ sudo make install
+  ```
+
+- paho.mqtt.c
+
+  ```shell
+  $ git clone https://github.com/eclipse/paho.mqtt.c.git
+  $ # 如果 github 连接不上，从文件服务器下载
+  $ wget https://static.emqx.net/fabric/sdk/dependency/paho.tar.gz
+  $ cd paho.mqtt.c
+  $ mkdir build
+  $ cd build
+  $ cmake ..
+  $ make
+  $ sudo make install
+  ```
+
+## emqx-platform-sdk 编译安装
 
 ```shell
-cd path/emqx-platform-sdk
-mkdir build
-cmake ..
-make
+$ wget https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.7.1.tar.gz
+$ cd emqx-platform-sdk
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+$ sudo make install
 ```
 
-## 安装
+## examples
 
-```shell
-make install
-```
-
-## 使用
-
-具体使用可参照[设备端数据上报](../quick_start/device_data_upload.md)
+项目的 examples 目录里有两个简单的 demo，一个是关于物模型的， 一个是设备影子的。生成的文件在 build 的 bin 目录下，此处可以参照 [设备端数据上报](../quick_start/device_data_upload.md) 更改 demo 的参数。
