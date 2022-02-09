@@ -1,13 +1,13 @@
 # 设备影子通信协议
-设备影子数据通过 Topic 进行流转，主要包括：设备上报状态到设备影子，应用程序更改设备状态，
+设备影子数据通过 topic 进行流转，主要包括：设备上报状态到设备影子，应用程序更改设备状态，
 设备离线再上线后主动获取设备影子信息，和设备端请求删除设备影子中的属性信息
 
 ## 设备影子 topic
 * `/fabric/shadow/update/${productKey}/${deviceName}`  
-设备和用户端发布消息到此topic，shadow收到该topic的消息后，将消息中的状态更新到设备影子中。 
+设备和用户端发布消息到此 topic，shadow 收到该 topic 的消息后，将消息中的状态更新到影子信息中。 
 
 * `/fabric/shadow/get/${productKey}/${deviceName}`  
-设备影子更新状态到给topic，设备订阅此topic获取最新消息。
+设备影子更新状态到该 topic，设备订阅此 topic 获取最新消息。
 
 ## 设备主动上报状态
 1. 设备上线后，使用 topic `/fabric/shadow/update/${productKey}/${deviceName}` 上报最新状态到影子  
@@ -24,7 +24,7 @@
 }
 ```
 
-2.设备影子接收到灯泡上报的状态数据后，更新影子文档 
+2.设备影子接收到设备上报的状态数据后，更新影子信息 
 ```json
 {
   "state": {
@@ -44,28 +44,28 @@
 }
 ```
 
-3. 影子文件更新后，设备影子会返回结果给设备，即发送消息到设备订阅的 Topic `/fabric/shadow/get/${productKey}/${deviceName}`
-    * 若更新成功，发送到该Topic中的消息为：
+3. 影子信息更新后，设备影子会返回结果给设备，即发送消息到设备订阅的 topic `/fabric/shadow/get/${productKey}/${deviceName}`
+    * 若更新成功，发送到该 topic 中的消息为：
       ```json
       {
          "method": "reply", 
          "payload": {
-         "status": "success", 
-         "version": 1
-      }, 
-      "timestamp": 1469564576
+            "status": "success", 
+            "version": 1
+          }, 
+         "timestamp": 1469564576
       }
       ```
-    * 若更新失败，发送到该Topic中的消息为：
+    * 若更新失败，发送到该 topic 中的消息为：
       ```json
       {
         "method": "reply",
         "payload": {
-          "status": "error",
-          "content": {
-          "errorcode": "${errorcode}",
-          "errormessage": "${errormessage}"
-          }
+           "status": "error",
+           "content": {
+              "errorcode": "${errorcode}",
+              "errormessage": "${errormessage}"
+           }
         },
         "timestamp": 1469564576
       }
@@ -73,7 +73,7 @@
       
 ## 应用程序设置期望状态
 应用程序通过调用云端API UpdateDeviceShadow 下发期望状态给设备影子，
-设备影子再将文件下发给设备端。设备根据影子更新状态，并上报最新状态至影子  
+设备影子再将影子信息下发给设备端。设备根据影子更新状态，并上报最新状态至影子  
 
 1. 应用程序调用云端API UpdateDeviceShadow，下发消息更改设备状态
 ```json
@@ -88,7 +88,7 @@
 }
 ```
 
-2. 设备影子接收到更新请求，更新其影子文档为：
+2. 设备影子接收到更新请求，更新其影子信息为：
 
 ```json
 {
@@ -117,7 +117,7 @@
 }
 ```
 
-3. 设备影子更新完成后，发送返回结果到Topic `/fabric/shadow/update/${productKey}/${deviceName}`。返回结果信息构成由设备影子决定
+3. 设备影子更新完成后，将影子信息发送到 topic `/fabric/shadow/get/${productKey}/${deviceName}`。
 
 ```json
 {
@@ -149,7 +149,10 @@
 }
 ```
 
-4. 如果设备灯泡在线，并且订阅了Topic `/fabric/shadow/get/${productKey}/${deviceName}`，则会立即收到消息
+4. 如果设备在线，并且订阅了 topic `/fabric/shadow/get/${productKey}/${deviceName}`，则会立即收到消息。  
+设备收到消息后，根据影子信息中的 desired 的值更新状态。  
+设备更新完状态后，上报最新状态到设备影子。 
+
 ```json
 {
   "method": "update", 
@@ -162,8 +165,8 @@
 }
 ```
 
-5. 最新状态上报成功后， 设备端和设备影子进行以下操作
-    * 设备端发消息到Topic `/fabric/shadow/update/${productKey}/${deviceName}` 中清空desired属性。消息如下
+5. 最新状态上报成功后，设备端和设备影子进行以下操作
+    * 设备端发消息到 topic `/fabric/shadow/update/${productKey}/${deviceName}` 中清空 desired 属性。消息如下
     ```json
     {
       "method": "update",
@@ -198,15 +201,15 @@
 ## 设备主动获取期望状态
 若应用程序发送指令时，设备离线。设备再次上线后，将主动获取设备影子内容  
 
-1. 设备主动发送以下消息到Topic `/fabric/shadow/update/${productKey}/${deviceName}`中，请求获取设备影子中保存的最新状态
+1. 设备主动发送以下消息到 topic `/fabric/shadow/update/${productKey}/${deviceName}`中，请求获取设备影子中保存的最新状态
 ```json
 {
   "method": "get"
 }
 ```
 
-2. 当设备影子收到这条消息后，发送最新状态到Topic `/fabric/shadow/get/${productKey}/${deviceName}`。  
-设备通过订阅该Topic获取最新状态。消息内容如下：
+2. 当设备影子收到这条消息后，发送最新状态到 topic `/fabric/shadow/get/${productKey}/${deviceName}`。  
+设备通过订阅该 topic 获取最新状态。消息内容如下：
 ```json
 {
   "method": "reply", 
@@ -240,8 +243,8 @@
 
 ## 设备主动删除影子状态
 若设备端已经是最新状态，设备端可以主动发送指令，删除设备影子中保存的某条属性状态  
-设备发送以下内容到Topic `/fabric/shadow/update/${productKey}/${deviceName}`中。
-其中，method为delete，属性的值为null。  
+设备发送以下内容到 topic `/fabric/shadow/update/${productKey}/${deviceName}`中。
+其中，method 为 delete，属性的值为 null。  
 * 删除影子中某一属性。
 ```json
 {
