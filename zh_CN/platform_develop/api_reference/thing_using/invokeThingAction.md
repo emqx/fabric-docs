@@ -51,7 +51,7 @@
     <td>params_json</td>
     <td>string</td>
     <td>是</td>
-    <td>{\"Fan\":"ON"}</td>
+    <td>{\"Fan\":\"ON\"}</td>
     <td>要启用服务的入参信息，数据格式为 JSON String，例如 params_json={"param1":1}。
         若此参数为空时，需传入 params_json={}
     </td>
@@ -84,7 +84,7 @@
 请求示例
 ```
 curl host:8082/device-thing-service/v0/thingModel/invokeThingAction -X POST \
--d '{"product_key":"KS9ZBEOR","device_name":"demo","model_id":"thing_model","identifier":"Switch","params_json":"{\"Fan\":"ON"}"}' \
+-d '{"product_key":"KS9ZBEOR","device_name":"demo","model_id":"thing_model","identifier":"Switch","params_json":"{\"Fan\":\"ON\"}"}' \
 -H "Content-Type: application/json" \
 -H "Cookie: FABRIC_TOKEN=fabric.1.4b84b15bff6ee5796152495a230e45e3d7e947d9.d5527e81265b78e47b7891e3ad18d4cdddd3fda2.1629086990.c24c2f07" 
 ```
