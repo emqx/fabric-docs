@@ -375,6 +375,68 @@ void *service_cb(void *payload)
 
 ```
 
+- 设备属性获取并设置相应的回调。
+
+```c
+// 获取期望属性函数，可在设备启动时，或重连是调用
+void get_desire(emqc_tm *tm) {
+  // 修改希望获取属性的 key
+    const char *keys[] = {"key_xxx", "key_xxx", "key_xxx"};
+    char        sfx[]  = "property/desired/get";
+    char        topic[EMQC_TM_TOPIC_LEN];
+
+    snprintf(topic, EMQC_TM_TOPIC_LEN, TM_FMT, product_key, device_name, sfx);
+    log_info("#PUB: %s", topic);
+    json_object *jso = emqc_tm_new_payload("thing.property.desired.get", NULL);
+  // 修改 key 的个数
+    emqc_tm_add_get_desired_param(jso, (const char **) keys, 3, model_id);
+    emqc_tm_pub(tm, topic, json_object_to_json_string(jso));
+    json_object_put(jso);
+    return;
+}
+
+// 回调函数
+void *desire_get_reply_cb(void *payload) {
+    tm_reply *tr = (tm_reply *) payload;
+    log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+    return NULL;
+}
+
+// 设置回调函数
+emqc_tm_set_dft_cb(tm, TM_CB_DESIRED_GET_REPLY, desire_get_reply_cb);
+
+```
+
+- 清除设备属性并设置响应的回调。
+
+```C
+// 清除期望属性
+void clear_desire(emqc_tm *tm) {
+    char          topic[EMQC_TM_TOPIC_LEN];
+    char          sfx[] = "property/desired/delete";
+    del_des_param ddp[] = {{"WF", NULL}, {"Power", "1"}};
+
+    snprintf(topic, EMQC_TM_TOPIC_LEN, TM_FMT, product_key, device_name, sfx);
+    log_info("#PUB: %s", topic);
+    json_object *jso = emqc_tm_new_payload("thing.property.desired.delete", NULL);
+    emqc_tm_add_del_desired_param(jso, ddp, 2, NULL);
+    emqc_tm_pub(tm, topic, json_object_to_json_string(jso));
+    json_object_put(jso);
+    return;
+}
+
+// 回调函数
+void *desire_delete_reply_cb(void *payload) {
+    tm_reply *tr = (tm_reply *) payload;
+    log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+    return NULL;
+}
+
+// 设置回调函数
+emqc_tm_set_dft_cb(tm, TM_CB_DESIRED_DEL_REPLY, desire_delete_reply_cb);
+
+```
+
 - 到此，我们的物模型就修改完毕，重新编译，既可以上报数据了。
 
 ## 设备影子数据上报
