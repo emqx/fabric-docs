@@ -2,7 +2,7 @@
 
 ## 项目地址
 
-[emqx-platform-sdk](https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.7.1.tar.gz)
+[emqx-platform-sdk](https://static.emqx.net/fabric/sdk/emqx-platform-sdk-0.7.2.tar.gz)
 
 ## 项目依赖
 
