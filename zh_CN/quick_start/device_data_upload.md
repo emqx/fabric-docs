@@ -212,6 +212,90 @@ emqc_tm_object property_array[] = {
 
 ```
 
+​		属性上报函数，响应函数以及属性设置回调。
+
+```c
+// 属性上报
+void property_post(emqc_tm *tm)
+{
+    char sfx[] = "property/post";
+    char mtd[] = "thing.property.post";
+    char topic[EMQC_TM_TOPIC_LEN];
+
+    json_object *jso = emqc_tm_new_payload(mtd, NULL);
+    int          i   = 0;
+    do {
+        if (property_array[i].type == EMQC_TM_TERMINATOR) {
+            break;
+        }
+        emqc_tm_add_post_param(jso, &property_array[i], model_id);
+    } while (++i);
+
+    snprintf(topic, EMQC_TM_TOPIC_LEN, TM_FMT, product_key, device_name, sfx);
+    log_info("#PUB: %s", topic);
+    log_info("#PAYLOAD: %s", json_object_to_json_string(jso));
+    emqc_tm_pub(tm, topic, json_object_to_json_string(jso));
+    json_object_put(jso);
+    return;
+}
+
+// 属性响应回调
+void *property_post_reply_cb(void *payload)
+{
+    emqc_tm_trans_object *obj = (emqc_tm_trans_object*) payload;
+    if (obj) {
+        switch (obj->type) {
+            // 符合物模型协议的数据，从这里获取
+            case TM_REP:;
+                tm_reply *tr = obj->rep;
+                log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+                break;
+            // 自定义数据，从这里获取
+            case TM_RAW:
+                log_info("#RECV: raw_data: %s", obj->raw);
+                break;
+            default:
+                log_err("Error trans type.");
+        }
+    }
+    return NULL;
+}
+
+// 属性设置回调
+void *property_set_cb(void *payload)
+{
+    emqc_tm_trans_object *obj = (emqc_tm_trans_object*) payload;
+    char *ret = NULL;
+    if (obj) {
+        switch (obj->type) {
+            case TM_REQ:;// 符合物模型协议的数据，从这里获取
+                tm_request *tr = obj->req;
+                log_info("#RECV: id: %s, version: %s, method: %s, params: %s", tr->id,
+                         tr->version, tr->method, tr->params);
+                // 设置操作
+                json_object *jso_tmp = json_tokener_parse(tr->params);
+                emqc_tm_property_set(jso_tmp, property_array, model_id);
+
+                json_object *jso      = json_object_new_object();
+                json_object *jso_data = json_object_new_object();
+                json_object_object_add(jso, "id", json_object_new_string(tr->id));
+                json_object_object_add(jso, "code", json_object_new_int(0));
+                json_object_object_add(jso, "data", jso_data);
+                ret = zstrdup(json_object_to_json_string(jso));
+                json_object_put(jso);
+                break;
+            case TM_RAW:// 自定义数据，从这里获取
+                log_info("#RECV: raw_data: %s", obj->raw);
+                break;
+            default:
+                log_err("Error trans type.");
+        }
+    }
+
+    return (void *) ret;
+}
+```
+
 
 
 ​		事件参数修改，根据 web 端生成的物模型描述，如下是事件相关参数，以及相关设置。
@@ -274,10 +358,7 @@ emqc_tm_object event_array[] = {
 	{ .type = EMQC_TM_ARR_STR, .key = "param01", .val_o = &param01 },
 	{ .type = EMQC_TM_TERMINATOR, .key = "", .val_o = NULL },
  };
-
 ```
-
-
 
 ​		服务参数修改，根据 web 端生成的物模型描述，如下是服务相关参数，以及相关设置。
 
@@ -325,54 +406,65 @@ emqc_tm_object service_array[] = {
 ```C
 void *service_cb(void *payload)
 {
-    tm_request *tr = (tm_request *) payload;
-    log_info("#RECV: id: %s, version: %s, method: %s, params: %s", tr->id,
-            tr->version, tr->method, tr->params);
-    json_object *jso_tmp = json_tokener_parse(tr->params);
-    json_object *jso_val = NULL;
-    int          val     = 0;
-    char *ret = NULL;
+    emqc_tm_trans_object *obj = (emqc_tm_trans_object*) payload;
+    char *       ret     = NULL;
+    if (obj) {
+        switch (obj->type) {
+            // 符合物模型协议的数据，从这里获取
+            case TM_REQ:;
+                tm_request *tr = obj->req;
+                log_info("#RECV: id: %s, version: %s, method: %s, params: %s", tr->id,
+                         tr->version, tr->method, tr->params);
+                json_object *jso_tmp = json_tokener_parse(tr->params);
+                json_object *jso_val = NULL;
+                int          val     = 0;
 
-    int i = 0;
-    int j = 0;
-    while (service_idents[i] != NULL) {
+                int i = 0;
+                int j = 0;
+                while (service_idents[i] != NULL) {
+                    if (!strstr(tr->method, service_idents[i])) {
+                        do {
+                            if (service_array[j].type == EMQC_TM_TERMINATOR) {
+                                break;
+                            }
 
-        if (!strstr(tr->method, service_idents[i])) {
-            do {
-                if (service_array[j].type == EMQC_TM_TERMINATOR) {
-                    break;
+                        } while (++j);
+
+                    } else {
+                        json_object *jso      = json_object_new_object();
+                        json_object *jso_data = json_object_new_object();
+                        do {
+                            if (service_array[j].type == EMQC_TM_TERMINATOR) {
+                                break;
+                            }
+
+                            // 这里可以加具体的操作。
+                            // 根据输入计算输出。
+                            emqc_tm_add_service_param(jso_data, service_array[j].key,
+                                                      &service_array[j]);
+                        } while (++j);
+
+                        json_object_object_add(jso, "id", json_object_new_string(tr->id));
+                        json_object_object_add(jso, "code", json_object_new_int(0));
+                        json_object_object_add(jso, "data", jso_data);
+                        ret = zstrdup(json_object_to_json_string(jso));
+                        json_object_put(jso);
+                        break;
+                    }
+                    i++;
+                    j++;
                 }
-
-            } while (++j);
-
-        } else {
-
-            json_object *jso      = json_object_new_object();
-            json_object *jso_data = json_object_new_object();
-            do {
-                if (service_array[j].type == EMQC_TM_TERMINATOR) {
-                    break;
-                }
-
-                // 这里可以加具体的操作。
-                // 根据输入计算输出。
-                emqc_tm_add_service_param(jso_data, service_array[j].key, &service_array[j]);
-            } while (++j);
-
-            json_object_object_add(jso, "id", json_object_new_string(tr->id));
-            json_object_object_add(jso, "code", json_object_new_int(0));
-            json_object_object_add(jso, "data", jso_data);
-            ret = zstrdup(json_object_to_json_string(jso));
-            json_object_put(jso);
-            break;
+                break;
+            // 自定义数据，从这里获取
+            case TM_RAW:
+                log_info("#RECV: raw_data: %s", obj->raw);
+                break;
+            default:
+                log_err("Error trans type.");
         }
-        i++;
-        j++;
-
     }
     return (void *) ret;
-}
-
+}Z
 ```
 
 - 设备属性获取并设置相应的回调。
@@ -396,9 +488,24 @@ void get_desire(emqc_tm *tm) {
 }
 
 // 回调函数
-void *desire_get_reply_cb(void *payload) {
-    tm_reply *tr = (tm_reply *) payload;
-    log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+void *desire_get_reply_cb(void *payload)
+{
+    emqc_tm_trans_object *obj = (emqc_tm_trans_object*) payload;
+    if (obj) {
+        switch (obj->type) {
+            // 符合物模型协议的数据，从这里获取
+            case TM_REP:;
+                tm_reply *tr = obj->rep;
+                log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+                break;
+            // 自定义数据，从这里获取
+            case TM_RAW:
+                log_info("#RECV: raw_data: %s", obj->raw);
+                break;
+            default:
+                log_err("Error trans type.");
+        }
+    }
     return NULL;
 }
 
@@ -426,9 +533,22 @@ void clear_desire(emqc_tm *tm) {
 }
 
 // 回调函数
-void *desire_delete_reply_cb(void *payload) {
-    tm_reply *tr = (tm_reply *) payload;
-    log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+void *desire_delete_reply_cb(void *payload)
+{
+    emqc_tm_trans_object *obj = (emqc_tm_trans_object*) payload;
+    if (obj) {
+        switch (obj->type) {
+            case TM_REP:;
+                tm_reply *tr = obj->rep;
+                log_info("#RECV: id: %s, code: %d, data: %s", tr->id, tr->code, tr->data);
+                break;
+            case TM_RAW:
+                log_info("#RECV: raw_data: %s", obj->raw);
+                break;
+            default:
+                log_err("Error trans type.");
+        }
+    }
     return NULL;
 }
 
